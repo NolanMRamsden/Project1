@@ -7,5 +7,5 @@
 !nios_system.qsys
 !pixel_drawer.vhd
 !pixel_drawer_hw.tcl
-!*.c
-!*.h
+!/*.c
+!/*.h
