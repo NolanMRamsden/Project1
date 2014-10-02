@@ -7,5 +7,6 @@
 !nios_system.qsys
 !pixel_drawer.vhd
 !pixel_drawer_hw.tcl
-!/*.c
-!/*.h
+!software/Headers
+!software/Source
+!software/entryPoint.c
