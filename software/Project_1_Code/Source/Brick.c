@@ -6,18 +6,24 @@
  */
 #include "../Headers/Brick.h"
 
-const int brickHeight=10;
-const int brickWidth=50;
-const int startBrickHealth=1;
 
-void initBrick(Brick *brick, int x, int y)
+
+void initBrick(Brick *brick, int x, int y, int health)
 {
 	brick->x = x;
 	brick->y = y;
-	brick->width  = brickWidth;
-	brick->height = brickHeight;
-	brick->health = startBrickHealth;
-	brick->prevHealth  = startBrickHealth;
+	brick->health = health;
+	brick->prevHealth  = 0;
+}
+
+void initBrickRow(BrickRow *brickRow, int startHealth)
+{
+	int brickNum=0;
+	for( brickNum=0 ; brickNum < bricksPerRow ; brickNum++)
+	{
+		brickRow->bricks[brickNum]=malloc(sizeof(Brick));
+		initBrick(brickRow->bricks[brickNum], brickLeftStart+brickNum*(brickWidth+brickSpacing), topScreenBound+brickSpacing, startHealth);
+	}
 }
 
 void hit(Brick *brick)
@@ -25,4 +31,5 @@ void hit(Brick *brick)
 	brick->health--;
 	if(brick->health < 0)
 		brick->health=0;
+	drawBrick(brick);
 }

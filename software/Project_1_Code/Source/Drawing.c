@@ -16,28 +16,29 @@ void initVGA()
 	pixel_buffer = alt_up_pixel_buffer_dma_open_dev("/dev/video_pixel_buffer_dma_0");
 
 	// Set the background buffer address – Although we don’t use the
-	//background, // they only provide a function to change the background
+	//background,
+	// they only provide a function to change the background
 	// buffer address, so
 	// we must set that, and then swap it to the foreground.
 	alt_up_pixel_buffer_dma_change_back_buffer_address(pixel_buffer, PIXEL_BUFFER_BASE);
 	// Swap background and foreground buffers
 	alt_up_pixel_buffer_dma_swap_buffers(pixel_buffer);
-	// Wait for the swap to completewhile
+	// Wait for the swap to complete while
 	(alt_up_pixel_buffer_dma_check_swap_buffers_status(pixel_buffer));
-	// Clear the screen
-	clearScreen();
-
 	// Initialize character buffer
 	char_buffer = alt_up_char_buffer_open_dev("/dev/video_character_buffer_with_dma_0");
 	alt_up_char_buffer_init(char_buffer);
+
+	clearScreen();
 }
 
 void clearScreen()
 {
+	alt_up_char_buffer_clear(char_buffer);
 	alt_up_pixel_buffer_dma_clear_screen(pixel_buffer, background);
-	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, 0, 0,rightScreenBound+1, 0, screenOutline, 0);
-	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, 0, 0, 0, bottomScreenBound+1,screenOutline, 0);
-	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, rightScreenBound+1, bottomScreenBound+1,rightScreenBound+1, 0, screenOutline, 0);
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, 0, topScreenBound-1,rightScreenBound+1, topScreenBound-1, screenOutline, 0);
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, 0, topScreenBound-1, 0, bottomScreenBound+1,screenOutline, 0);
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, rightScreenBound+1, bottomScreenBound+1,rightScreenBound+1, topScreenBound-1, screenOutline, 0);
 	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, rightScreenBound+1, bottomScreenBound+1, 0,bottomScreenBound+1, screenOutline, 0);
 }
 
@@ -48,6 +49,10 @@ void drawBall(Ball *ball)
 	int y      = ball->y/100;
 
 	coverBall(ball->prevX,ball->prevY,background);
+
+	if(ball->alive == 0)
+		return;
+
 	coverBall(x,y,colour);
 	ball->prevX=x;
 	ball->prevY=y;
@@ -55,13 +60,32 @@ void drawBall(Ball *ball)
 
 void coverBall(int x, int y, int colour)
 {
-	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y,x+4, y, colour, 0);
-	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+1,x+5, y+1, colour, 0);
-	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+2,x+6, y+2, colour, 0);
-	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+3,x+6, y+3, colour, 0);
-	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+4,x+6, y+4, colour, 0);
-	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+5,x+5, y+5, colour, 0);
-	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+6,x+4, y+6, colour, 0);
+	if (colour == background)
+	{
+		//Following lines draw the ball in give color
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y,x+4, y, background, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+1,x+5, y+1, background, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+2,x+6, y+2, background,0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+3,x+6, y+3, background, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+4,x+6, y+4, background, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+5,x+5, y+5, background, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+6,x+4, y+6, background, 0);
+	}
+	else
+	{
+		//Steel Ball Pattern
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y,x+4, y, LightGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+1,x+5, y+1, LightGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+2,x+6, y+2, LightGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+3,x+6, y+3, LightGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+4,x+6, y+4, LightGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+5,x+5, y+5, LightGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+6,x+4, y+6, LightGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+3, y,x+6, y+3, White, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+4, y,x+6, y+2, White, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+3,x+3, y+6, DarkGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+4,x+2, y+6, DarkGrey, 0);
+	}
 }
 
 void drawPaddle(Paddle *paddle)
@@ -69,21 +93,168 @@ void drawPaddle(Paddle *paddle)
 	int colour = paddle->colour;
 	int x      = paddle->x/100;
 	int y      = paddle->y/100;
-
-	coverPaddle(paddle->prevX,paddle->prevY,paddle->width,background);
-	coverPaddle(x,y,paddle->width,colour);
+	int width  = paddle->width;
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, paddle->prevX, paddle->prevY,paddle->prevX+width-1, paddle->prevY, background, 0);
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, paddle->prevX, paddle->prevY+1,paddle->prevX+width-1, paddle->prevY+1, background, 0);
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, paddle->prevX, paddle->prevY+2,paddle->prevX+width-1, paddle->prevY+2, background, 0);
+	coverPaddle(x,y,width,colour);
 	paddle->prevX=x;
 	paddle->prevY=y;
 }
 
 void coverPaddle(int x, int y, int width, int colour)
 {
-	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y,x+width, y, colour, 0);
-	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+1,x+width, y+1, colour, 0);
-	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+2,x+width, y+2, colour, 0);
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y,x+1, y, Red, 0);
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+1,x+1, y+1, Red, 0);
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+2,x+1, y+2, Red, 0);
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+width-2, y,x+width-1, y, Red, 0);
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+width-2, y+1,x+width-1, y+1, Red, 0);
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+width-2, y+2,x+width-1, y+2, Red, 0);
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y,x+width-3, y, White, 0);
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+1,x+width-3, y+1, LightGrey, 0);
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+2,x+width-3, y+2, DarkGrey, 0);
+}
+
+void drawBrick (Brick *brick)
+{
+	coverBrick(brick->x,brick->y,0);
+	if(brick->prevHealth == brick->health || brick->health==0)
+		return;
+
+	coverBrick(brick->x,brick->y,brick->health);
+
+	brick->prevHealth = brick->health;
+}
+
+void coverBrick(int x, int y, int health)
+{
+	int colour= background;
+	if (health>=3)
+	{
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y,x+5, y , LightGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+6, y,x+18, y, White, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+1,x+13, y+1 , LightGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+14, y+1,x+18, y+1 , White, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+2,x, y+2 , DarkGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+2,x+15, y+2, LightGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+16, y+2,x+18, y+2 , White, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+3,x, y+3 , DarkGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+3,x+16, y+3, LightGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+17, y+3,x+18, y+3 , White, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+4,x+1, y+4 , DarkGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+4,x+17, y+4, LightGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+18, y+4,x+18, y+4 , White, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+5,x+2, y+5 , DarkGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+3, y+5,x+17, y+5, LightGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+18, y+5,x+18, y+5 , White, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+6,x+4, y+6 , DarkGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+5, y+6,x+18, y+6, LightGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+7,x+11, y+7 , DarkGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+12, y+7,x+18, y+7, LightGrey, 0);
+	}
+	else if (health==2)
+	{
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y,x+5, y , LightGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+6, y,x+18, y, White, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+1,x+13, y+1 , LightGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+14, y+1,x+18, y+1 , White, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+2,x, y+2 , DarkGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+2,x+15, y+2, LightGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+16, y+2,x+18, y+2 , White, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+3,x, y+3 , DarkGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+3,x+16, y+3, LightGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+17, y+3,x+18, y+3 , White, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+4,x+1, y+4 , DarkGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+4,x+17, y+4, LightGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+18, y+4,x+18, y+4 , White, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+5,x+2, y+5 , DarkGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+3, y+5,x+17, y+5, LightGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+18, y+5,x+18, y+5 , White, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+6,x+4, y+6 , DarkGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+5, y+6,x+18, y+6, LightGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+7,x+11, y+7 , DarkGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+12, y+7,x+18, y+7, LightGrey, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+8, y,x+8, y+4, background, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+9, y+3,x+11, y+3, background, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+7, y+4,x+7, y+4, background, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+11, y+4,x+11, y+4, background, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+6, y+5,x+6, y+5, background, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+11, y+5,x+12, y+5, background, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+5, y+6,x+6, y+6, background, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+12, y+6,x+12, y+6, background, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+13, y+7,x+13, y+7, background, 0);
+	}
+	else if (health==1)
+	{
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y,x+5, y , Red, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+6, y,x+18, y, White, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+1,x+13, y+1 , Red, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+14, y+1,x+18, y+1 , White, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+2,x, y+2 , Maroon, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+2,x+15, y+2, Red, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+16, y+2,x+18, y+2 , White, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+3,x, y+3 , Maroon, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+3,x+16, y+3, Red, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+17, y+3,x+18, y+3 , White, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+4,x+1, y+4 , Maroon, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+4,x+17, y+4, Red, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+18, y+4,x+18, y+4 , White, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+5,x+2, y+5 , Maroon, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+3, y+5,x+17, y+5, Red, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+18, y+5,x+18, y+5 , White, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+6,x+4, y+6 , Maroon, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+5, y+6,x+18, y+6, Red, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+7,x+11, y+7 , Maroon, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+12, y+7,x+18, y+7, Red, 0);
+	}else
+	{
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y,x+18, y, background, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+1,x+18, y+1, background, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+2,x+18, y+2, background, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+3,x+18, y+3, background, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+4,x+18, y+4, background, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+5,x+18, y+5, background, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+6,x+18, y+6, background, 0);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+7,x+18, y+7, background, 0);
+	}
 }
 
 void drawText(char *text, int x, int y, int selected)
 {
+	if(selected)
+		alt_up_char_buffer_string(char_buffer,"-> ",x-3,y);
+	else
+		alt_up_char_buffer_string(char_buffer,"  ",x-3,y);
+
 	alt_up_char_buffer_string(char_buffer,text,x,y);
+}
+
+void drawMenu(Menu *menu)
+{
+	int i;
+	int difference = (bottomScreenBound-menuOffset)-(topScreenBound+menuOffset);
+	for( i = topScreenBound+menuOffset; i<topScreenBound+menuOffset+difference*(menu->max+1)/5; i++)
+	{
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, leftScreenBound+menuOffset, i,rightScreenBound-menuOffset, i, menuBG, 0);
+	}
+
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, leftScreenBound+menuOffset+1, topScreenBound+menuOffset+1 ,rightScreenBound-menuOffset-1, topScreenBound+menuOffset+1 , menuHighlight, 0);
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, leftScreenBound+menuOffset+1, topScreenBound+menuOffset+difference*(menu->max+1)/5-1 ,rightScreenBound-menuOffset-1, topScreenBound+menuOffset+difference*(menu->max+1)/5-1 , menuHighlight, 0);
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, leftScreenBound+menuOffset+1, topScreenBound+menuOffset+1 ,leftScreenBound+menuOffset+1, topScreenBound+menuOffset+difference*(menu->max+1)/5-1 , menuHighlight, 0);
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, rightScreenBound-menuOffset-1, topScreenBound+menuOffset+1 ,rightScreenBound-menuOffset-1, topScreenBound+menuOffset+difference*(menu->max+1)/5-1 , menuHighlight, 0);
+
+	for( i = 0 ; i<=menu->max;i++)
+	{
+		int selected=0;
+		if(i==menu->selected)
+			selected=1;
+		drawText(menu->option[i],33,21+4*i,selected);
+	}
+}
+
+void drawScore(int score)
+{
+	char *str = malloc(sizeof(char));
+	sprintf(str,"%d  ",score);
+	drawText(str,1,1,0);
 }

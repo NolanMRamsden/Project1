@@ -13,6 +13,5 @@
 #include "Brick.h"
 #include "Paddle.h"
 #include "Level.h"
-#include "Game.h"
 
 #endif /* HEADERS_H_ */
