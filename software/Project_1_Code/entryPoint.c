@@ -1,25 +1,74 @@
-/*
- * "Hello World" example.
- *
- * This example prints 'Hello from Nios II' to the STDOUT stream. It runs on
- * the Nios II 'standard', 'full_featured', 'fast', and 'low_cost' example
- * designs. It runs with or without the MicroC/OS-II RTOS and requires a STDOUT
- * device in your system's hardware.
- * The memory footprint of this hosted application is ~69 kbytes by default
- * using the standard reference design.
- *
- * For a reduced footprint version of this template, and an explanation of how
- * to reduce the memory footprint for a given application, see the
- * "small_hello_world" template.
- *
- */
 
-#include <stdio.h>
+#include "Headers/headers.h"
+#include "Headers/Menu.h"
+
+static int currentState;
+static int prevState;
+
+void changeState(int state)
+{
+	prevState = currentState;
+	currentState = state;
+}
 
 int main()
 {
-  printf("Hello from Nios II!\n");
+	initVGA();
+	initLevel(3);
+	prevState= -1;
+	currentState=Playing;
+	drawStart(level);
+	Menu *menu = malloc(sizeof(Menu));
+	//initInterrupt();
 
-  return 0;
+
+	int counter=0;
+	while(1)
+	{
+		//input to state machine
+		counter++;
+		if(counter>650000)
+		{
+			counter=0;
+			if(getSwitchIndex()== 0)
+				changeState(Paused);
+			else if(getSwitchIndex()== 1)
+				changeState(MenuShow);
+			else
+				changeState(Playing);
+		}
+		//flicker changes
+		if(prevState != currentState)
+		{
+
+			if(currentState == Playing)
+			{
+				clearScreen();
+				drawStart(level);
+				initInterrupt();
+			}else
+			{
+				stopInterrupt();
+				if (currentState == MenuShow)
+				{
+					getMenu(menu,rootMenu);
+				}else if (currentState == Paused)
+				{
+					getMenu(menu,pauseMenu);
+				}
+				clearScreen();
+				drawStart(level);
+				drawMenu(menu);
+			}
+			prevState = currentState;
+		}
+		//state machine
+		if(currentState != Playing)
+		{
+			menuLoop(menu);
+		}
+	}
+	return 0;
 }
+
 
