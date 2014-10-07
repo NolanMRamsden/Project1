@@ -36,7 +36,6 @@ void menuLoop()
 		menuIndexLookUp(currentMenu.optionIndex[currentMenu.selected]);
 	}
 }
-
 /*
  * the actual execution of tied commands
  */
@@ -45,6 +44,7 @@ void menuIndexLookUp(int index)
 	switch (index)
 	{
 		case -2:   //exit to main
+			changeState(Playing);
 			return;
 
 		case -1:  //previous menu

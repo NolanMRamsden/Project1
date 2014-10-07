@@ -8,6 +8,7 @@
 #include "../Headers/Brick.h"
 #include <stdlib.h>
 
+
 int score;
 
 /*

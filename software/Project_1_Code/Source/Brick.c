@@ -7,7 +7,6 @@
 #include "../Headers/Brick.h"
 
 
-
 void initBrick(Brick *brick, int x, int y, int health)
 {
 	brick->x = x;

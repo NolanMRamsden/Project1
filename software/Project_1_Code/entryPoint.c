@@ -15,10 +15,15 @@ int main()
 {
 	initVGA();
 
-	//allocate memory for level farm and pre load root menu
-	BrickMap *brickmap = malloc(sizeof(BrickMap));
-	prevState=currentState=Playing;
+	//pre load the root menu
 	getMenu(&currentMenu,rootMenu, 1);
+
+	//allocate memory for level farm
+	BrickMap *brickmap = malloc(sizeof(BrickMap));
+
+	//set the game to playing
+	prevState=currentState=Playing;
+
 
 	//look up the level from level farm and load it into currentLevel
 	levelLookUp(brickmap,4);

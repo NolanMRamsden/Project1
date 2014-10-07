@@ -6,6 +6,7 @@
  */
 #include "../Headers/headers.h"
 
+
 void startBall(Ball *ball, int x, int y, int xVelo, int yVelo)
 {
 	ball->x = x*100;

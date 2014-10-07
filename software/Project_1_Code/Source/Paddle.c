@@ -7,7 +7,6 @@
 #include "../Headers/Definitions.h"
 #include "../Headers/Paddle.h"
 
-
 void initPaddle(Paddle *paddle, int x)
 {
 	paddle->x = x*100;
