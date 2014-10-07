@@ -9,6 +9,9 @@
 #ifndef PADDLE_H_
 #define PADDLE_H_
 
+/*
+ * the players paddle
+ */
 typedef struct Paddle
 {
 	float x;

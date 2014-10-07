@@ -15,7 +15,9 @@
 #define INTERRUPT_H_
 
 extern alt_u32 interruptFunction(void* context);
+extern alt_u32 count(void* context);
 extern void initInterrupt();
+extern void runCountDown();
 extern void stopInterrupt();
 
 #endif /* INTERRUPT_H_ */

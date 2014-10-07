@@ -14,6 +14,7 @@
 
 extern void initVGA();
 extern void clearScreen();
+extern void clearCharacters();
 extern void drawBall(Ball *ball);
 extern void coverBall(int x, int y, int colour);
 extern void drawPaddle(Paddle *paddle);
@@ -21,7 +22,8 @@ extern void coverPaddle(int x, int y, int width, int colour);
 extern void drawBrick(Brick *brick);
 extern void coverBrick(int x, int y, int health);
 extern void drawText(char *text, int x, int y, int selected);
-extern void drawMenu(Menu *menu);
+extern void drawMenu(Menu menu);
+extern void drawMenuText(Menu menu);
 extern void drawScore(int score);
 
 #endif /* DRAWING_H_ */

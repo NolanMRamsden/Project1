@@ -9,7 +9,10 @@
 #include "io.h"
 
 const int scalars[4] = {10,5,-5,-10};
-//returns a number from -10 to 10 for the scalar value of horizontal movement
+
+/*
+ * return a scalar from -10 to 10 for paddle speed movement
+ */
 int getUserInput()
 {
 	int i=0;
@@ -20,7 +23,9 @@ int getUserInput()
 	}
 	return 0;
 }
-
+/*
+ * returns the lowest index of a triggered switch
+ */
 int getSwitchIndex()
 {
 	int i=0;

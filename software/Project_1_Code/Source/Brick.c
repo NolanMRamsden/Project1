@@ -16,20 +16,16 @@ void initBrick(Brick *brick, int x, int y, int health)
 	brick->prevHealth  = 0;
 }
 
-void initBrickRow(BrickRow *brickRow, int startHealth)
-{
-	int brickNum=0;
-	for( brickNum=0 ; brickNum < bricksPerRow ; brickNum++)
-	{
-		brickRow->bricks[brickNum]=malloc(sizeof(Brick));
-		initBrick(brickRow->bricks[brickNum], brickLeftStart+brickNum*(brickWidth+brickSpacing), topScreenBound+brickSpacing, startHealth);
-	}
-}
-
+/*
+ * reduce the heatlh of the brick, note buff spawn logic should probably go here,
+ * as it has the coordinates of the brick being hit
+ */
 void hit(Brick *brick)
 {
 	brick->health--;
 	if(brick->health < 0)
 		brick->health=0;
+
+	currentLevel->brickCount--;
 	drawBrick(brick);
 }

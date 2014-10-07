@@ -28,11 +28,14 @@
 #define topBanner         0xFFFF
 
 //game state constants
-#define Playing 0
-#define Paused  1
-#define MenuShow    2
-#define pauseMenu 10
-#define rootMenu  11
+#define Playing        0
+#define Paused         1
+#define MenuShow       2
+#define pauseMenu      10
+#define rootMenu       11
+#define settingsMenu   12
+#define profileMenu    13
+#define scoreMenu      14
 
 //Menu stuff
 #define menuOffset     50
@@ -44,9 +47,11 @@
 #define paddleHeight      220
 #define paddleStartWidth  60
 #define paddleThickness   5
+#define paddleBounceScale 70
 
 //ball stuff
 #define ballDiameter      7
+#define maxBalls          3
 
 //brick stuff
 #define bricksPerRow      15
@@ -54,6 +59,7 @@
 #define brickWidth        19
 #define brickSpacing      2
 #define brickLeftStart    4
+#define maxRows           10
 
 //colours
 #define Black           0x0000      /*   0,   0,   0 */

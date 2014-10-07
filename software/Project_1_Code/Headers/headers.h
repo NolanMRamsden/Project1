@@ -12,6 +12,7 @@
 #include "Definitions.h"
 #include "Brick.h"
 #include "Paddle.h"
+#include "Menu.h"
 #include "Level.h"
 
 #endif /* HEADERS_H_ */
