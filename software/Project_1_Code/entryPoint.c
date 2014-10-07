@@ -14,15 +14,21 @@ void changeState(int state)
 int main()
 {
 	initVGA();
-	initLevel(3);
-	prevState= -1;
-	currentState=Playing;
-	drawStart(level);
-	Menu *menu = malloc(sizeof(Menu));
-	//initInterrupt();
 
+	//allocate memory for level farm and pre load root menu
+	BrickMap *brickmap = malloc(sizeof(BrickMap));
+	prevState=currentState=Playing;
+	getMenu(&currentMenu,rootMenu, 1);
 
-	int counter=0;
+	//look up the level from level farm and load it into currentLevel
+	levelLookUp(brickmap,4);
+	initLevel(*brickmap);
+	drawStart(currentLevel);   //this is optional here
+
+	runCountDown();              //count down from three
+	initInterrupt();            //start the game (we dont need to right off the bat (probably shouldnt)
+
+	int counter=0;   //so were not doing direct IO reads on EVERY iteration (we could timer this buttttt no)
 	while(1)
 	{
 		//input to state machine
@@ -30,9 +36,7 @@ int main()
 		if(counter>650000)
 		{
 			counter=0;
-			if(getSwitchIndex()== 0)
-				changeState(Paused);
-			else if(getSwitchIndex()== 1)
+			if(getSwitchIndex()== 1)
 				changeState(MenuShow);
 			else
 				changeState(Playing);
@@ -40,32 +44,29 @@ int main()
 		//flicker changes
 		if(prevState != currentState)
 		{
-
 			if(currentState == Playing)
 			{
 				clearScreen();
-				drawStart(level);
+				drawStart(currentLevel);
+				runCountDown();
 				initInterrupt();
 			}else
 			{
 				stopInterrupt();
-				if (currentState == MenuShow)
-				{
-					getMenu(menu,rootMenu);
-				}else if (currentState == Paused)
-				{
-					getMenu(menu,pauseMenu);
-				}
 				clearScreen();
-				drawStart(level);
-				drawMenu(menu);
+				drawStart(currentLevel);
+				drawMenu(currentMenu);
 			}
 			prevState = currentState;
 		}
 		//state machine
 		if(currentState != Playing)
 		{
-			menuLoop(menu);
+			menuLoop();
+		}else //while were playing we will have to check for other things (all balls gone etc.)
+		{
+			if(currentLevel->brickCount==0)
+				drawText("Completed",37,30,0);
 		}
 	}
 	return 0;

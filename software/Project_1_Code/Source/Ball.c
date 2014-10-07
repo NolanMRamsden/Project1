@@ -64,6 +64,7 @@ void updatePosition(Ball *ball)
 			if(ball->x >= currentLevel->paddle->x - ballDiameter*100-100
 			&& ball->x <= currentLevel->paddle->x + currentLevel->paddle->width*100 + 100)
 			{
+				//mapped the paddle to a pyramid, we can improve this logic later
 				ball->xVelo += ((ball->x+ballDiameter*50)-(currentLevel->paddle->x+currentLevel->paddle->width*50))/paddleBounceScale;
 				bounceRoof(ball);
 			}
@@ -76,18 +77,19 @@ void updatePosition(Ball *ball)
 	for(i=0;i<maxRows;i++)
 	{
 		if (y + ballDiameter >= currentLevel->bricks[i][0]->y
-		&&  y <= currentLevel->bricks[i][0]->y + brickHeight )
+		&&  y <= currentLevel->bricks[i][0]->y + brickHeight ) //see if we can cut out a whole row of processing
 		{
 			for(j=0;j<bricksPerRow;j++)
 			{
 				Brick brick = *currentLevel->bricks[i][j];
-				if(brick.health > 0)
+				if(brick.health > 0)                          //dont bother if brick is dead
 				{
 					if(x + ballDiameter >= brick.x
 					&& x <= brick.x + brickWidth )
 					{
-						if(hasBounced==0)
+						if(hasBounced==0)  //buffer double bounces
 						{
+							//we use the previous value of the ball to tell which side it hit
 							if(ball->prevY > brick.y + brickHeight)
 							{
 								bounceRoof(ball);
@@ -104,7 +106,7 @@ void updatePosition(Ball *ball)
 							{
 								bounceWall(ball);
 								ball->x = (brick.x+brickWidth)*100+100;
-							} else
+							} else //something went arry, but we hit a brick so just guess
 							{
 								bounceRoof(ball);
 							}
@@ -117,31 +119,6 @@ void updatePosition(Ball *ball)
 			}
 		}
 	}//end brick logic
-	/*
-	int i=0;
-
-	for(i=0;i<bricksPerRow;i++)
-	{
-		Brick brick = *level->brickRow->bricks[i];
-		if(brick.health > 0)
-		{
-			if (ball->y/100 >= brick.y
-			&&  ball->y/100 <= brick.y + brickHeight)
-			{
-				if(ball->x/100 >= brick.x
-				&& ball->x/100 <= brick.x + brickWidth +1)//&& ball->yVelo > 0)
-				{
-					updateScore(3);
-					if(ball->yVelo < 0)
-						ball->y=(brick.y + brickHeight)*100;
-					if(hasBounced==0)
-						bounceRoof(ball);
-					hasBounced=1;
-					hit(level->brickRow->bricks[i]);
-				}
-			}
-		}
-	}*/
 }
 
 void bounceWall(Ball *ball)
