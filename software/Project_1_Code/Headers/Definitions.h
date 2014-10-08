@@ -61,6 +61,12 @@
 #define brickLeftStart    4
 #define maxRows           10
 
+//buff stuff
+#define pointsBuff        1
+#define widthPlusBuff     2
+#define widthMinusBuff    3
+#define spawnBallBuff     4
+
 //colours
 #define Black           0x0000      /*   0,   0,   0 */
 #define Navy            0x000F      /*   0,   0, 128 */

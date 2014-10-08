@@ -25,6 +25,9 @@ void hit(Brick *brick)
 	if(brick->health < 0)
 		brick->health=0;
 
+	if(currentLevel->buff->alive == 0)
+		spawnBuff(currentLevel->buff, brick->x+brickWidth/2,brick->y+brickHeight,1);
+
 	currentLevel->brickCount--;
 	drawBrick(brick);
 }

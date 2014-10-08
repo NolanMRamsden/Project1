@@ -25,6 +25,12 @@ alt_u32 interruptFunction(void* context)
 		}
 	}
 
+	if(currentLevel->buff->alive)
+	{
+		updateBuff(currentLevel->buff);
+		drawBuff(currentLevel->buff);
+	}
+
 	moveHorizontal(currentLevel->paddle, getUserInput());
 	drawPaddle(currentLevel->paddle);
 

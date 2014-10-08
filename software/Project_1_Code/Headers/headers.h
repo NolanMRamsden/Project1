@@ -8,8 +8,9 @@
 #ifndef HEADERS_H_
 #define HEADERS_H_
 
-#include "Ball.h"
 #include "Definitions.h"
+#include "Buff.h"
+#include "Ball.h"
 #include "Brick.h"
 #include "Paddle.h"
 #include "Menu.h"

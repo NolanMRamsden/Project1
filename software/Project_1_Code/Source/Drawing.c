@@ -277,3 +277,8 @@ void drawScore(int score)
 	sprintf(str,"%d  ",score);
 	drawText(str,1,1,0);
 }
+
+void drawBuff(Buff *buff)
+{
+
+}

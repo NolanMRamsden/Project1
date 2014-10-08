@@ -25,5 +25,6 @@ extern void drawText(char *text, int x, int y, int selected);
 extern void drawMenu(Menu menu);
 extern void drawMenuText(Menu menu);
 extern void drawScore(int score);
+extern void drawBuff(Buff *buff);
 
 #endif /* DRAWING_H_ */
