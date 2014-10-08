@@ -15,7 +15,23 @@ int countDown;
  */
 alt_u32 interruptFunction(void* context)
 {
+	swapBuffers();
+
 	int i=0;
+	int j=0;
+
+	for(j=0;j<maxRows;j++)
+	{
+		for(i=0;i<bricksPerRow;i++)
+		{
+			if (currentLevel->bricks[j][i]->needUpdate == 1) {
+				currentLevel->bricks[j][i]->prevHealth = -1;
+				drawBrick(currentLevel->bricks[j][i]);
+				currentLevel->bricks[j][i]->needUpdate = 0;
+
+			}
+		}
+	}
 	for(i=0;i<maxBalls;i++)
 	{
 		if(currentLevel->ball[i]->alive)
@@ -27,6 +43,9 @@ alt_u32 interruptFunction(void* context)
 
 	moveHorizontal(currentLevel->paddle, getUserInput());
 	drawPaddle(currentLevel->paddle);
+
+
+
 
 	return alt_ticks_per_second()/screenRefreshRate;
 }

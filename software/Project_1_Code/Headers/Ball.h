@@ -17,6 +17,8 @@ typedef struct Ball
 	int y;
 	int prevX;
 	int prevY;
+	int prev2X;
+	int prev2Y;
 	int xVelo;
 	int yVelo;
 	int alive;

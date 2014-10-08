@@ -9,6 +9,7 @@
 
 void initBrick(Brick *brick, int x, int y, int health)
 {
+	brick->needUpdate = 0;
 	brick->x = x;
 	brick->y = y;
 	brick->health = health;
@@ -21,6 +22,7 @@ void initBrick(Brick *brick, int x, int y, int health)
  */
 void hit(Brick *brick)
 {
+	brick->needUpdate = 1;
 	brick->health--;
 	if(brick->health < 0)
 		brick->health=0;

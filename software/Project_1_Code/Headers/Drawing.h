@@ -14,6 +14,7 @@
 
 extern void initVGA();
 extern void clearScreen();
+extern void swapBuffers();
 extern void clearCharacters();
 extern void drawBall(Ball *ball);
 extern void coverBall(int x, int y, int colour);

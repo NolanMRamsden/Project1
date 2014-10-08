@@ -29,6 +29,8 @@ int main()
 	levelLookUp(brickmap,4);
 	initLevel(*brickmap);
 	drawStart(currentLevel);   //this is optional here
+	swapBuffers();
+	drawStart(currentLevel);
 
 	runCountDown();              //count down from three
 	initInterrupt();            //start the game (we dont need to right off the bat (probably shouldnt)

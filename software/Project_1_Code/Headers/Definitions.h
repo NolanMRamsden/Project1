@@ -17,10 +17,10 @@
 
 //screen bounds
 #define leftScreenBound   1
-#define rightScreenBound  318
+#define rightScreenBound  317
 #define topScreenBound    15
 #define bottomScreenBound 238
-#define screenRefreshRate 60
+#define screenRefreshRate 150
 
 //colours
 #define background        0x0000

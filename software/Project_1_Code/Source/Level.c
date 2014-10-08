@@ -38,8 +38,8 @@ void initLevel(BrickMap brickMap)
 
 	initPaddle(currentLevel->paddle,30);
 	startBall(currentLevel->ball[0],40,topScreenBound+(brickHeight+brickSpacing)*rowHit+brickHeight*1.2,200,200);
-	startBall(currentLevel->ball[1],40,topScreenBound+(brickHeight+brickSpacing)*rowHit+brickHeight*1.2,200,200);
-	startBall(currentLevel->ball[2],40,topScreenBound+(brickHeight+brickSpacing)*rowHit+brickHeight*1.2,200,200);
+	startBall(currentLevel->ball[1],60,topScreenBound+(brickHeight+brickSpacing)*rowHit+brickHeight*1.2,200,200);
+	startBall(currentLevel->ball[2],80,topScreenBound+(brickHeight+brickSpacing)*rowHit+brickHeight*1.2,200,200);
 
 	score = 0;
 	currentLevel->brickCount=0;
@@ -76,6 +76,7 @@ void drawStart(Level *level)
 	drawPaddle(level->paddle);
 	drawScore(score);
 	drawText("BRICK BREAKER",34,1,0);
+
 }
 
 void initAllBricks(Level *level, int initArray[][bricksPerRow])
