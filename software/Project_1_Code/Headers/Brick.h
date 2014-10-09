@@ -18,6 +18,7 @@ typedef struct Brick
 	int x;
 	int y;
 	int prevHealth;
+	int needUpdate;
 	int health;
 } Brick;
 

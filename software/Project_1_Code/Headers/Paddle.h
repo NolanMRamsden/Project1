@@ -18,6 +18,9 @@ typedef struct Paddle
 	float y;
 	int prevX;
 	int prevY;
+	int prev2X;
+	int prev2Y;
+
 	int width;
 	int height;
 	int colour;

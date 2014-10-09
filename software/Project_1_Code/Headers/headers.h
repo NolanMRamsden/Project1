@@ -15,5 +15,7 @@
 #include "Paddle.h"
 #include "Menu.h"
 #include "Level.h"
+#include "SDCard.h"
+#include "Score.h"
 
 #endif /* HEADERS_H_ */

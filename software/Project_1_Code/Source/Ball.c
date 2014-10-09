@@ -11,8 +11,8 @@ void startBall(Ball *ball, int x, int y, int xVelo, int yVelo)
 {
 	ball->x = x*100;
 	ball->y = y*100;
-	ball->prevX = x*100;
-	ball->prevY = y*100;
+	ball->prevX = ball->prev2X = x;
+	ball->prevY = ball->prev2Y = y;
 	ball->xVelo = xVelo;
 	ball->yVelo = yVelo;
 	ball->alive = 1;
