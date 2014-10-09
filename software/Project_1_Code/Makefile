@@ -153,6 +153,7 @@ C_SRCS += Source/Menu.c
 C_SRCS += Source/Interrupt.c
 C_SRCS += Source/SDCard.c
 C_SRCS += Source/Score.c
+C_SRCS += Source/Buff.c
 CXX_SRCS :=
 ASM_SRCS :=
 

@@ -101,31 +101,7 @@ void updateScore(int value)
  * shouldnt be here, but there is a dependancy love traingle going on
  * and im too lazy too fix it
  */
-void updateBuff(Buff *buff)
-{
-	if(buff->alive == 0)
-		return;
 
-	buff->x += buff->xVelo;
-	buff->y += buff->yVelo;
-
-	if (buff->y > bottomScreenBound)
-		//hitBottom(buff);
-
-	if (buff->y >= currentLevel->paddle->y-ballDiameter*100-100
-	&&  buff->y <= currentLevel->paddle->y-ballDiameter*100 + currentLevel->paddle->height*100+100)
-	{
-		if(buff->x >= currentLevel->paddle->x - ballDiameter*100-100
-		&& buff->x <= currentLevel->paddle->x + currentLevel->paddle->width*100 + 100)
-		{
-			switch (buff->type)
-			{
-				case pointsBuff:
-					updateScore(100);
-			}
-		}
-	}//end paddle logic
-}
 /*
  * pre build level farm, note 0 will produce a random level
  */

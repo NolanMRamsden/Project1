@@ -5,8 +5,8 @@
  *      Author: Nolan
  */
 
+#include "../Headers/Buff.h"
 #include "../Headers/Interrupt.h"
-
 static alt_alarm alarm;
 int countDown;
 
@@ -20,6 +20,12 @@ alt_u32 interruptFunction(void* context)
 	int i=0;
 	int j=0;
 
+	if(currentLevel->buff->alive)
+	{
+		moveBuff(currentLevel->buff);
+		drawBuff(currentLevel->buff);
+	}
+
 	for(j=0;j<maxRows;j++)
 	{
 		for(i=0;i<bricksPerRow;i++)
@@ -32,6 +38,7 @@ alt_u32 interruptFunction(void* context)
 			}
 		}
 	}
+
 	for(i=0;i<maxBalls;i++)
 	{
 		if(currentLevel->ball[i]->alive)
@@ -41,16 +48,9 @@ alt_u32 interruptFunction(void* context)
 		}
 	}
 
-	if(currentLevel->buff->alive)
-	{
-		updateBuff(currentLevel->buff);
-		drawBuff(currentLevel->buff);
-	}
 
 	moveHorizontal(currentLevel->paddle, getUserInput());
 	drawPaddle(currentLevel->paddle);
-
-
 
 
 	return alt_ticks_per_second()/screenRefreshRate;
