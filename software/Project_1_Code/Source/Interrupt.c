@@ -20,7 +20,7 @@ alt_u32 interruptFunction(void* context)
 	int i=0;
 	int j=0;
 
-	if(currentLevel->buff->alive)
+	if(currentLevel->buff->alive == 1 || currentLevel->buff->needsErase)
 	{
 		moveBuff(currentLevel->buff);
 		drawBuff(currentLevel->buff);

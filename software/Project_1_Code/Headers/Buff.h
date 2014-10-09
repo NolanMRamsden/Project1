@@ -12,11 +12,14 @@
 typedef struct Buff
 {
 	int alive;
+	int needsErase;
 	int type;
 	int x;
 	int y;
 	int prevX;
 	int prevY;
+	int prev2X;
+	int prev2Y;
 	int xVelo;
 	int yVelo;
 } Buff;

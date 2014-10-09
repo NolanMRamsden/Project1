@@ -14,7 +14,7 @@ void spawnBuff(Buff *buff, int x, int y, int type)
 	buff->prevX = x;
 	buff->prevY = y;
 	buff->xVelo = 0;
-	buff->yVelo = 200;
+	buff->yVelo = 50;
 	buff->alive = 1;
 }
 
@@ -26,9 +26,10 @@ void moveBuff(Buff *buff)
 	buff->x += buff->xVelo;
 	buff->y += buff->yVelo;
 
-	if (buff->y > bottomScreenBound)
-		//hitBottom(buff);
-
+	if (buff->y+ ballDiameter*100+100 > bottomScreenBound*100)
+	{
+		buff->alive = 0;
+	}
 	if (buff->y >= currentLevel->paddle->y-ballDiameter*100-100
 	&&  buff->y <= currentLevel->paddle->y-ballDiameter*100 + currentLevel->paddle->height*100+100)
 	{
@@ -39,7 +40,22 @@ void moveBuff(Buff *buff)
 			{
 				case pointsBuff:
 					updateScore(100);
+					break;
+				case widthPlusBuff:
+					currentLevel->paddle->width+= 20;
+					if(currentLevel->paddle->width > paddleMaxWidth)
+						currentLevel->paddle->width = paddleMaxWidth;
+					break;
+				case widthMinusBuff:
+					currentLevel->paddle->width-= 20;
+					if(currentLevel->paddle->width < paddleMinWidth)
+						currentLevel->paddle->width = paddleMinWidth;
+					break;
+				case spawnBallBuff:
+
+					break;
 			}
+			buff->alive=0;
 		}
 	}//end paddle logic
 }

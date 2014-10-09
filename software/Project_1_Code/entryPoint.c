@@ -53,6 +53,8 @@ int main()
 			if(currentState == Playing)
 			{
 				clearScreen();
+				drawStart(currentLevel);   //this is optional here
+				swapBuffers();
 				drawStart(currentLevel);
 				runCountDown();
 				initInterrupt();
@@ -60,6 +62,8 @@ int main()
 			{
 				stopInterrupt();
 				clearScreen();
+				drawStart(currentLevel);   //this is optional here
+				swapBuffers();
 				drawStart(currentLevel);
 				drawMenu(currentMenu);
 			}

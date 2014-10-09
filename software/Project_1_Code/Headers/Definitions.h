@@ -48,6 +48,8 @@
 #define paddleStartWidth  60
 #define paddleThickness   5
 #define paddleBounceScale 70
+#define paddleMaxWidth    100
+#define paddleMinWidth    20
 
 //ball stuff
 #define ballDiameter      7

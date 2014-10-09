@@ -306,5 +306,37 @@ void drawScore(int score)
 
 void drawBuff(Buff *buff)
 {
+	coverBuff(buff->prev2X,buff->prev2Y,-1);
+	if(buff->alive == 1)
+		coverBuff(buff->x/100,buff->y/100,buff->type);
 
+	buff->prev2X=buff->prevX;
+	buff->prev2Y=buff->prevY;
+	buff->prevX=buff->x/100;
+	buff->prevY=buff->y/100;
+}
+
+void coverBuff(int x, int y, int type)
+{
+	int colour = background;
+	if(type == -1)
+	{
+		colour=background;
+	}else if (type == widthMinusBuff)
+	{
+		colour = Red;
+	}else if (type == widthPlusBuff)
+	{
+		colour = Green;
+	}else if (type == pointsBuff)
+	{
+		colour = Cyan;
+	}
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y,x+4, y, colour, 1);
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+1,x+5, y+1, colour, 1);
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+2,x+6, y+2, colour,1);
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+3,x+6, y+3, colour, 1);
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+4,x+6, y+4, colour, 1);
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+5,x+5, y+5, colour, 1);
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+6,x+4, y+6, colour, 1);
 }

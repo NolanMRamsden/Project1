@@ -18,6 +18,9 @@ int score;
  */
 void initLevel(BrickMap brickMap)
 {
+	currentLevel->buff=malloc(sizeof(Buff));
+	spawnBuff(currentLevel->buff,0,0,0);
+	currentLevel->buff->alive=0;
 	int i=0,j=0;
 	for(i=0;i<maxBalls;i++)
 	{
