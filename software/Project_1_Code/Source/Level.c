@@ -4,8 +4,9 @@
  *  Created on: Sep 25, 2014
  *      Author: Karen
  */
-#include "../Headers/Level.h"
 #include "../Headers/Brick.h"
+#include "../Headers/Buff.h"
+#include "../Headers/Level.h"
 #include <stdlib.h>
 
 
@@ -109,7 +110,7 @@ void updateBuff(Buff *buff)
 	buff->y += buff->yVelo;
 
 	if (buff->y > bottomScreenBound)
-		hitBottom(buff);
+		//hitBottom(buff);
 
 	if (buff->y >= currentLevel->paddle->y-ballDiameter*100-100
 	&&  buff->y <= currentLevel->paddle->y-ballDiameter*100 + currentLevel->paddle->height*100+100)

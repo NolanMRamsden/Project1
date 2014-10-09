@@ -4,7 +4,7 @@
  *  Created on: Sep 24, 2014
  *      Author: Nolan
  */
-
+#include "Buff.h"
 #include "headers.h"
 
 #ifndef BRICK_H_

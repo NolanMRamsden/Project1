@@ -7,6 +7,7 @@
 #include "../Headers/Brick.h"
 
 
+
 void initBrick(Brick *brick, int x, int y, int health)
 {
 	brick->needUpdate = 0;
@@ -28,7 +29,8 @@ void hit(Brick *brick)
 		brick->health=0;
 
 	if(currentLevel->buff->alive == 0)
-		spawnBuff(currentLevel->buff, brick->x+brickWidth/2,brick->y+brickHeight,1);
+		printf("");
+		//spawnBuff(currentLevel->buff, brick->x+brickWidth/2,brick->y+brickHeight,1);
 
 	currentLevel->brickCount--;
 	drawBrick(brick);
