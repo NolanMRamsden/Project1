@@ -20,7 +20,7 @@
 #define rightScreenBound  317
 #define topScreenBound    15
 #define bottomScreenBound 238
-#define screenRefreshRate 150
+#define screenRefreshRate 20
 
 //colours
 #define background        0x0000
