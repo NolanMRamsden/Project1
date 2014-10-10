@@ -177,10 +177,16 @@ void drawBrick (Brick *brick)
 
 void coverBrick(int x, int y, int health)
 {
-	if(health > 3)
+	if(health == 5)
 	{
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y,x+brickWidth, y+brickHeight , Red, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+brickHeight,x+brickWidth, y , Red, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y,x+18, y, Maroon, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+1,x+18, y+1, Maroon, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+2,x+18, y+2, Maroon, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+3,x+18, y+3, Maroon, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+4,x+18, y+4, Maroon, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+5,x+18, y+5, Maroon, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+6,x+18, y+6, Maroon, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+7,x+18, y+7, Maroon, 1);
 	}
 	else if (health==3)
 	{

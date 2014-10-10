@@ -25,7 +25,7 @@ int main()
 
 
 	//look up the level from level farm and load it into currentLevel
-	levelLookUp(brickmap,4);
+	levelLookUp(brickmap,6);
 	initLevel(*brickmap);
 	drawStart(currentLevel);   //this is optional here
 	swapBuffers();

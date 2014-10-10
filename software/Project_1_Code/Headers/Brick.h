@@ -20,6 +20,7 @@ typedef struct Brick
 	int prevHealth;
 	int needUpdate;
 	int health;
+	int isIndestructable;
 } Brick;
 
 

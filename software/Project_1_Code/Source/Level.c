@@ -50,7 +50,8 @@ void initLevel(BrickMap brickMap)
 	for(i=0;i<maxRows;i++)
 	{
 		for(j=0;j<bricksPerRow;j++)
-			currentLevel->brickCount += brickMap.brickArray[i][j];
+			if(brickMap.brickArray[i][j]!=5)
+				currentLevel->brickCount += brickMap.brickArray[i][j];
 	}
 }
 
@@ -230,7 +231,7 @@ void levelLookUp(BrickMap *brickMap, int level)
 			{0,0,3,3,3,3,3,0,3,3,3,3,3,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			{0,0,3,3,3,3,3,0,3,3,3,3,3,0,0},
-			{0,0,3,3,3,3,3,0,3,3,3,3,3,0,0},
+			{0,0,5,5,5,5,5,0,5,5,5,5,5,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
 		};
 		loadInto(brickMap,brickArray);
