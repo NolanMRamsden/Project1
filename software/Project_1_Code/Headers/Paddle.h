@@ -21,8 +21,6 @@ typedef struct Paddle
 	int prev2X;
 	int prev2Y;
 
-	int gunMounted;
-
 	int width;
 	int height;
 	int colour;

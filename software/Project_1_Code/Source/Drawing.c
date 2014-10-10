@@ -126,24 +126,17 @@ void drawPaddle(Paddle *paddle)
 	int x      = paddle->x/100;
 	int y      = paddle->y/100;
 	int width  = paddle->width;
-	int gunMounted = paddle->gunMounted;
 	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, paddle->prev2X, paddle->prev2Y,paddle->prev2X+width-1, paddle->prev2Y, background, 1);
 	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, paddle->prev2X, paddle->prev2Y+1,paddle->prev2X+width-1, paddle->prev2Y+1, background, 1);
 	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, paddle->prev2X, paddle->prev2Y+2,paddle->prev2X+width-1, paddle->prev2Y+2, background, 1);
-
-	if (paddle->gunMounted == 1)//erase gun
-	{
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, paddle->prev2X+width/2, paddle->prev2Y-3,paddle->prev2X+width/2, paddle->prev2Y-1, background, 1);
-	}
-
-	coverPaddle(x,y,width,colour,gunMounted);
+	coverPaddle(x,y,width,colour);
 	paddle->prev2X = paddle->prevX;
 	paddle->prev2Y = paddle->prevY;
 	paddle->prevX=x;
 	paddle->prevY=y;
 }
 
-void coverPaddle(int x, int y, int width, int colour, int gunMounted)
+void coverPaddle(int x, int y, int width, int colour)
 {
 	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y,x+1, y, Red, 1);
 	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+1,x+1, y+1, Red, 1);
@@ -154,14 +147,6 @@ void coverPaddle(int x, int y, int width, int colour, int gunMounted)
 	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y,x+width-3, y, White, 1);
 	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+1,x+width-3, y+1, LightGrey, 1);
 	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+2,x+width-3, y+2, DarkGrey, 1);
-
-	if (gunMounted == 1) //draw Gun
-	{
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+width/2, y-3,x+width/2, y-1,Red , 1);
-
-	}
-
-
 }
 
 void drawBrick (Brick *brick)
