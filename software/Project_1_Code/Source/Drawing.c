@@ -319,6 +319,13 @@ void drawScore(int score)
 	drawText(str,1,1,0);
 }
 
+void drawAmmo(int ammo)
+{
+	char *str = malloc(sizeof(char));
+	sprintf(str,"Ammo: %d  ",ammo);
+	drawText(str,73,1,0);
+}
+
 void drawBuff(Buff *buff)
 {
 	coverBuff(buff->prev2X,buff->prev2Y,-1);
@@ -346,6 +353,9 @@ void coverBuff(int x, int y, int type)
 	}else if (type == pointsBuff)
 	{
 		colour = Cyan;
+	}else if (type == gunBuff)
+	{
+		colour = Magenta;
 	}
 	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y,x+4, y, colour, 1);
 	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+1,x+5, y+1, colour, 1);

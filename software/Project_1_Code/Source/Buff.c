@@ -26,10 +26,18 @@ void moveBuff(Buff *buff)
 	buff->x += buff->xVelo;
 	buff->y += buff->yVelo;
 
+	//redraw bricks buff is touching
+	int i;
+	int xbrick = (int)((buff->x/100-leftScreenBound)/(brickWidth+brickSpacing));
+	if(xbrick >= 0 && xbrick < bricksPerRow)
+		for(i=0;i<maxRows;i++)
+			currentLevel->bricks[i][xbrick]->needUpdate=1;
+
 	if (buff->y+ ballDiameter*100+100 > bottomScreenBound*100)
 	{
 		buff->alive = 0;
 	}
+
 	if (buff->y >= currentLevel->paddle->y-ballDiameter*100-100
 	&&  buff->y <= currentLevel->paddle->y-ballDiameter*100 + currentLevel->paddle->height*100+100)
 	{
@@ -51,8 +59,11 @@ void moveBuff(Buff *buff)
 					if(currentLevel->paddle->width < paddleMinWidth)
 						currentLevel->paddle->width = paddleMinWidth;
 					break;
-				case spawnBallBuff:
-
+				case gunBuff:
+					currentLevel->paddle->gunMounted=1;
+					currentLevel->paddle->gunAmmo+=1;
+					if(currentLevel->paddle->gunAmmo > maxAmmo)
+						currentLevel->paddle->gunAmmo=maxAmmo;
 					break;
 			}
 			buff->alive=0;

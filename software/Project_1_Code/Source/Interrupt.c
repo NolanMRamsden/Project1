@@ -23,7 +23,6 @@ alt_u32 interruptFunction(void* context)
 	if(currentLevel->buff->alive == 1 || currentLevel->buff->needsErase)
 	{
 		moveBuff(currentLevel->buff);
-		drawBuff(currentLevel->buff);
 	}
 
 	for(j=0;j<maxRows;j++)
@@ -38,6 +37,12 @@ alt_u32 interruptFunction(void* context)
 			}
 		}
 	}
+	//note this must occur after bricks to ensure it is visible over the bricks
+	if(currentLevel->buff->alive == 1 || currentLevel->buff->needsErase)
+	{
+		drawBuff(currentLevel->buff);
+	}
+
 
 	for(i=0;i<maxBalls;i++)
 	{
@@ -51,7 +56,7 @@ alt_u32 interruptFunction(void* context)
 
 	moveHorizontal(currentLevel->paddle, getUserInput());
 	drawPaddle(currentLevel->paddle);
-
+	drawAmmo(currentLevel->paddle->gunAmmo);
 
 	return alt_ticks_per_second()/screenRefreshRate;
 }

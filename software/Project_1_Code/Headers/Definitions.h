@@ -20,7 +20,7 @@
 #define rightScreenBound  317
 #define topScreenBound    15
 #define bottomScreenBound 238
-#define screenRefreshRate 20
+#define screenRefreshRate 120
 
 //colours
 #define background        0x0000
@@ -50,6 +50,7 @@
 #define paddleBounceScale 70
 #define paddleMaxWidth    100
 #define paddleMinWidth    20
+#define maxAmmo           10
 
 //ball stuff
 #define ballDiameter      7
@@ -67,7 +68,9 @@
 #define pointsBuff        1
 #define widthPlusBuff     2
 #define widthMinusBuff    3
-#define spawnBallBuff     4
+#define gunBuff           4
+#define numBuffs          4
+#define buffFrequency     100
 
 //colours
 #define Black           0x0000      /*   0,   0,   0 */
