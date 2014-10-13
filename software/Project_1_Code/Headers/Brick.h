@@ -21,6 +21,7 @@ typedef struct Brick
 	int needUpdate;
 	int health;
 	int isIndestructable;
+	int isExplosive;
 } Brick;
 
 

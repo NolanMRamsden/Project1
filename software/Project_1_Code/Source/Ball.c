@@ -114,7 +114,21 @@ void updatePosition(Ball *ball)
 						}
 						hasBounced=1;
 						updateScore(3);
-						hit(currentLevel->bricks[i][j]);
+						if (currentLevel->bricks[i][j]->isExplosive == 1){ //looks like this if statement is not getting executed
+							hit(currentLevel->bricks[i-1][j-1]);
+							hit(currentLevel->bricks[i-1][j]);
+							hit(currentLevel->bricks[i-1][j+1]);
+							hit(currentLevel->bricks[i][j-1]);
+							hit(currentLevel->bricks[i][j]);
+							hit(currentLevel->bricks[i][j+1]);
+							hit(currentLevel->bricks[i+1][j-1]);
+							hit(currentLevel->bricks[i+1][j]);
+							hit(currentLevel->bricks[i+1][j+1]);
+						}
+						else{
+							hit(currentLevel->bricks[i][j]);
+						}
+
 					}
 				}
 			}
