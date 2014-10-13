@@ -14,6 +14,8 @@ void changeState(int state)
 
 int main()
 {
+	sdcard_Init();
+	initProfiles();
 	initVGA();
 
 	//pre load the root menu

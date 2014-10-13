@@ -61,6 +61,12 @@ void menuIndexLookUp(int index)
 			return;
 
 		case 2:
+			if(!sdcard_isPresent() || !sdcard_isFAT16())
+			{
+				printf("Please insert an SD Card \n");
+				return;
+			}
+
 			getMenu(&currentMenu,profileMenu,1);
 			drawMenuText(currentMenu);
 			return;
@@ -71,8 +77,12 @@ void menuIndexLookUp(int index)
 			return;
 
 		case 4:   //switch to settings menu
-			getMenu(&currentMenu,scoreMenu,1);
+			getMenu(&currentMenu,settingsMenu,1);
 			drawMenuText(currentMenu);
+			return;
+
+		case 5:
+			printf("test save! \n");
 			return;
 	}
 }
@@ -123,12 +133,14 @@ void getMenu(Menu *menu, int index, int pushToStack)
 		sprintf(menu->option[1],"     Volume");
 		sprintf(menu->option[2],"   Game Speed");
 		sprintf(menu->option[3],"     Scores");
+		sprintf(menu->option[4],"    Test Save");
 		menu->min=1;
 		menu->max=4;
 		menu->selected=1;
 		menu->optionIndex[1] = 0;
 		menu->optionIndex[2] = 0;
 		menu->optionIndex[3] = 4;
+		menu->optionIndex[4] = 5;
 	}
 	else if(index == scoreMenu)
 	{
