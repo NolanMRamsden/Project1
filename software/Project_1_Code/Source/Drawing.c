@@ -126,17 +126,24 @@ void drawPaddle(Paddle *paddle)
 	int x      = paddle->x/100;
 	int y      = paddle->y/100;
 	int width  = paddle->width;
+	int gunMounted = paddle->gunMounted;
 	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, paddle->prev2X, paddle->prev2Y,paddle->prev2X+width-1, paddle->prev2Y, background, 1);
 	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, paddle->prev2X, paddle->prev2Y+1,paddle->prev2X+width-1, paddle->prev2Y+1, background, 1);
 	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, paddle->prev2X, paddle->prev2Y+2,paddle->prev2X+width-1, paddle->prev2Y+2, background, 1);
-	coverPaddle(x,y,width,colour);
+
+	if (paddle->gunMounted == 1)//erase gun
+	{
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, paddle->prev2X+width/2, paddle->prev2Y-3,paddle->prev2X+width/2, paddle->prev2Y-1, background, 1);
+	}
+
+	coverPaddle(x,y,width,colour,gunMounted);
 	paddle->prev2X = paddle->prevX;
 	paddle->prev2Y = paddle->prevY;
 	paddle->prevX=x;
 	paddle->prevY=y;
 }
 
-void coverPaddle(int x, int y, int width, int colour)
+void coverPaddle(int x, int y, int width, int colour, int gunMounted)
 {
 	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y,x+1, y, Red, 1);
 	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+1,x+1, y+1, Red, 1);
@@ -147,6 +154,14 @@ void coverPaddle(int x, int y, int width, int colour)
 	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y,x+width-3, y, White, 1);
 	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+1,x+width-3, y+1, LightGrey, 1);
 	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+2,x+width-3, y+2, DarkGrey, 1);
+
+	if (gunMounted == 1) //draw Gun
+	{
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+width/2, y-3,x+width/2, y-1,Red , 1);
+
+	}
+
+
 }
 
 void drawBrick (Brick *brick)
@@ -162,10 +177,16 @@ void drawBrick (Brick *brick)
 
 void coverBrick(int x, int y, int health)
 {
-	if(health > 3)
+	if(health == 5)
 	{
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y,x+brickWidth, y+brickHeight , Red, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+brickHeight,x+brickWidth, y , Red, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y,x+18, y, Maroon, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+1,x+18, y+1, Maroon, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+2,x+18, y+2, Maroon, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+3,x+18, y+3, Maroon, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+4,x+18, y+4, Maroon, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+5,x+18, y+5, Maroon, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+6,x+18, y+6, Maroon, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+7,x+18, y+7, Maroon, 1);
 	}
 	else if (health==3)
 	{
@@ -304,7 +325,49 @@ void drawScore(int score)
 	drawText(str,1,1,0);
 }
 
+void drawAmmo(int ammo)
+{
+	char *str = malloc(sizeof(char));
+	sprintf(str,"Ammo: %d  ",ammo);
+	drawText(str,73,1,0);
+}
+
 void drawBuff(Buff *buff)
 {
+	coverBuff(buff->prev2X,buff->prev2Y,-1);
+	if(buff->alive == 1)
+		coverBuff(buff->x/100,buff->y/100,buff->type);
 
+	buff->prev2X=buff->prevX;
+	buff->prev2Y=buff->prevY;
+	buff->prevX=buff->x/100;
+	buff->prevY=buff->y/100;
+}
+
+void coverBuff(int x, int y, int type)
+{
+	int colour = background;
+	if(type == -1)
+	{
+		colour=background;
+	}else if (type == widthMinusBuff)
+	{
+		colour = Red;
+	}else if (type == widthPlusBuff)
+	{
+		colour = Green;
+	}else if (type == pointsBuff)
+	{
+		colour = Cyan;
+	}else if (type == gunBuff)
+	{
+		colour = Magenta;
+	}
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y,x+4, y, colour, 1);
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+1,x+5, y+1, colour, 1);
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+2,x+6, y+2, colour,1);
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+3,x+6, y+3, colour, 1);
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+4,x+6, y+4, colour, 1);
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+5,x+5, y+5, colour, 1);
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+6,x+4, y+6, colour, 1);
 }

@@ -6,6 +6,7 @@
  */
 
 #include <stdio.h>
+#include <stdbool.h>
 #include <SDCard.h>
 #include <altera_up_sd_card_avalon_interface.h>
 
@@ -84,7 +85,7 @@ void sdcard_ListFiles(char *directory)
 */
 short int sdcard_fopen(char *file_name, bool create_new_if_not_exist)
 {
-	short int handle = alt_up_sd_card_fopen("total.txt",false);
+	short int handle = alt_up_sd_card_fopen(file_name,false);
 	return handle;
 }
 

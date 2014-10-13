@@ -11,6 +11,7 @@
 /*
  * SD Card writing has an issue where more data than was originally read must be written. This method constructs the string to account for this
  */
+/*
 char* convert_integer_to_string_for_write(int score, char file_name[], char score_string[])
 {
 	int i = 0;
@@ -41,10 +42,11 @@ char* convert_integer_to_string_for_write(int score, char file_name[], char scor
 
 	return score_string;
 }
-
+*/
 /**
  * Retrieves an integer score from the SD card
  */
+/*
 int get_score_from_sd_card(char read_data[])
 {
 	int score = 0;
@@ -63,10 +65,11 @@ int get_score_from_sd_card(char read_data[])
 
 	return score;
 }
-
+*/
 /*
  * Writes an integer score to the SD card
  */
+/*
 void write_score_to_sd_card(int score)
 {
 	char score_string[100] = {0};
@@ -80,6 +83,7 @@ void write_score_to_sd_card(int score)
 	printf("Stored score_string: %s \n", score_string);
 
 }
+*/
 
 
 

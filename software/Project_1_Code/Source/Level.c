@@ -18,6 +18,9 @@ int score;
  */
 void initLevel(BrickMap brickMap)
 {
+	currentLevel->buff=malloc(sizeof(Buff));
+	spawnBuff(currentLevel->buff,0,0,0);
+	currentLevel->buff->alive=0;
 	int i=0,j=0;
 	for(i=0;i<maxBalls;i++)
 	{
@@ -47,7 +50,8 @@ void initLevel(BrickMap brickMap)
 	for(i=0;i<maxRows;i++)
 	{
 		for(j=0;j<bricksPerRow;j++)
-			currentLevel->brickCount += brickMap.brickArray[i][j];
+			if(brickMap.brickArray[i][j]!=5)
+				currentLevel->brickCount += brickMap.brickArray[i][j];
 	}
 }
 
@@ -77,6 +81,7 @@ void drawStart(Level *level)
 	drawPaddle(level->paddle);
 	drawScore(score);
 	drawText("BRICK BREAKER",34,1,0);
+	drawAmmo(level->paddle->gunAmmo);
 
 }
 
@@ -101,31 +106,7 @@ void updateScore(int value)
  * shouldnt be here, but there is a dependancy love traingle going on
  * and im too lazy too fix it
  */
-void updateBuff(Buff *buff)
-{
-	if(buff->alive == 0)
-		return;
 
-	buff->x += buff->xVelo;
-	buff->y += buff->yVelo;
-
-	if (buff->y > bottomScreenBound)
-		//hitBottom(buff);
-
-	if (buff->y >= currentLevel->paddle->y-ballDiameter*100-100
-	&&  buff->y <= currentLevel->paddle->y-ballDiameter*100 + currentLevel->paddle->height*100+100)
-	{
-		if(buff->x >= currentLevel->paddle->x - ballDiameter*100-100
-		&& buff->x <= currentLevel->paddle->x + currentLevel->paddle->width*100 + 100)
-		{
-			switch (buff->type)
-			{
-				case pointsBuff:
-					updateScore(100);
-			}
-		}
-	}//end paddle logic
-}
 /*
  * pre build level farm, note 0 will produce a random level
  */
@@ -250,7 +231,7 @@ void levelLookUp(BrickMap *brickMap, int level)
 			{0,0,3,3,3,3,3,0,3,3,3,3,3,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			{0,0,3,3,3,3,3,0,3,3,3,3,3,0,0},
-			{0,0,3,3,3,3,3,0,3,3,3,3,3,0,0},
+			{0,0,5,5,5,5,5,0,5,5,5,5,5,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
 		};
 		loadInto(brickMap,brickArray);

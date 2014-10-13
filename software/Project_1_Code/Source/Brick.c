@@ -15,6 +15,10 @@ void initBrick(Brick *brick, int x, int y, int health)
 	brick->y = y;
 	brick->health = health;
 	brick->prevHealth  = 0;
+	if(health==5)
+		brick->isIndestructable=1;
+	else
+		brick->isIndestructable=0;
 }
 
 /*
@@ -23,14 +27,17 @@ void initBrick(Brick *brick, int x, int y, int health)
  */
 void hit(Brick *brick)
 {
-	brick->needUpdate = 1;
+	if(brick->isIndestructable == 1)
+		return;
+
 	brick->health--;
+	brick->needUpdate = 1;
 	if(brick->health < 0)
 		brick->health=0;
-
-	if(currentLevel->buff->alive == 0)
-		printf("");
-		//spawnBuff(currentLevel->buff, brick->x+brickWidth/2,brick->y+brickHeight,1);
+	if(brick->health == 0)
+		if(currentLevel->buff->alive == 0)
+			if(rand() % 100 < buffFrequency)
+				spawnBuff(currentLevel->buff, brick->x+brickWidth/2,brick->y+brickHeight,rand()%numBuffs+1);
 
 	currentLevel->brickCount--;
 	drawBrick(brick);

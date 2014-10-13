@@ -9,6 +9,8 @@
 
 void initPaddle(Paddle *paddle, int x)
 {
+	paddle->gunMounted = 0;
+	paddle->gunAmmo = 0;
 	paddle->x = x*100;
 	paddle->y = paddleHeight*100;
 	paddle->prevX = x*100;

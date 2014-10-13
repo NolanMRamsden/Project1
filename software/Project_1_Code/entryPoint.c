@@ -1,7 +1,5 @@
 
-#include "Headers/Buff.h"
 #include "Headers/headers.h"
-#include "Headers/Menu.h"
 
 static int currentState;
 static int prevState;
@@ -10,12 +8,24 @@ void changeState(int state)
 {
 	prevState = currentState;
 	currentState = state;
+
 }
 
 int main()
 {
 	sdcard_Init();
-	initProfiles();
+
+	while(!sdcard_isPresent())
+	{
+		printf("No SD Card inserted \n");
+	}
+	while(!sdcard_isFAT16())
+	{
+		printf("SD Card must be FAT16 formatted! \n");
+	}
+
+	// score = get_score_from_sd_card(1);
+ 	initProfiles();
 	initVGA();
 
 	//pre load the root menu
@@ -29,7 +39,7 @@ int main()
 
 
 	//look up the level from level farm and load it into currentLevel
-	levelLookUp(brickmap,4);
+	levelLookUp(brickmap,6);
 	initLevel(*brickmap);
 	drawStart(currentLevel);   //this is optional here
 	swapBuffers();
@@ -57,6 +67,8 @@ int main()
 			if(currentState == Playing)
 			{
 				clearScreen();
+				drawStart(currentLevel);   //this is optional here
+				swapBuffers();
 				drawStart(currentLevel);
 				runCountDown();
 				initInterrupt();
@@ -64,6 +76,8 @@ int main()
 			{
 				stopInterrupt();
 				clearScreen();
+				drawStart(currentLevel);   //this is optional here
+				swapBuffers();
 				drawStart(currentLevel);
 				drawMenu(currentMenu);
 			}

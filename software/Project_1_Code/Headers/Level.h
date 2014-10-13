@@ -39,7 +39,6 @@ extern void initLevel(BrickMap brickMap);
 extern void initAllBricks(Level *level, int initArray[][bricksPerRow]);
 extern void drawStart(Level *level);
 extern void updateScore(int value);
-extern void updateBuff(Buff *buff);
 extern void levelLookUp(BrickMap *brickmap, int level);
 extern void loadInto(BrickMap *brickmap, int map[][bricksPerRow]);
 #endif /* LEVEL_H_ */

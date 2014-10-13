@@ -5,6 +5,7 @@
  *      Author: Karen
  */
 #include "../Headers/Menu.h"
+#include "../Headers/Profile.h"
 
 /*
  * abstract menu loop that executes tied commands when left key is pressed
@@ -83,6 +84,8 @@ void menuIndexLookUp(int index)
 
 		case 5:
 			printf("test save! \n");
+			getMenu(&currentMenu, loadprofileMenu, 1);
+			drawMenuText(currentMenu);
 			return;
 	}
 }
@@ -166,6 +169,22 @@ void getMenu(Menu *menu, int index, int pushToStack)
 		menu->optionIndex[1] = 0;
 		menu->optionIndex[2] = 0;
 		menu->optionIndex[3] = 0;
+	}else if(index == loadprofileMenu)
+	{
+		// Load the names from the available profiles (loading scores for now)
+
+		sprintf(menu->option[0], "    Profiles");
+		sprintf(menu->option[1], "%i", (*profile_1).score);
+		sprintf(menu->option[2], "%i", (*profile_2).score);
+		sprintf(menu->option[3], "%i", (*profile_3).score);
+
+		menu->min=1;
+		menu->max=4;
+		menu->selected=1;
+		menu->optionIndex[1] = 0;
+		menu->optionIndex[2] = 0;
+		menu->optionIndex[3] = 0;
+
 	}
 	else
 	{
