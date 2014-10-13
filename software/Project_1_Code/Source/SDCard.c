@@ -5,7 +5,7 @@
  *      Author: Gavin
  */
 
-#include <stdio.h>
+#include "../Headers/Definitions.h"
 #include <SDCard.h>
 #include <altera_up_sd_card_avalon_interface.h>
 

@@ -9,6 +9,7 @@
 #define INPUT_H_
 
 extern int getUserInput();
+extern int getMenuPB();
 extern int getSwitchIndex();
 extern void turnOnLED(int index);
 extern void turnOffLED(int index);

@@ -24,7 +24,7 @@ void moveHorizontal(Paddle *paddle, int x)
 {
 	paddle->x += (x*paddleMoveScale);
 
-	if ( paddle->x < leftScreenBound*100)
+	if ( paddle->x < leftScreenBound*100-100)
 		paddle->x = leftScreenBound*100;
 	else if ( paddle->x + paddle->width*100 > rightScreenBound*100 )
 		paddle->x = rightScreenBound*100 - paddle->width*100;
