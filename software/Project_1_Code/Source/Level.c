@@ -77,7 +77,8 @@ void drawStart(Level *level)
 			drawBall(level->ball[i]);
 	}
 
-
+	if(level->buff->alive)
+		drawBuff(level->buff);
 	drawPaddle(level->paddle);
 	drawScore(score);
 	drawText("BRICK BREAKER",34,1,0);
