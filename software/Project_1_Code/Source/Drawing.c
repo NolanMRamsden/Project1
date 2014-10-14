@@ -125,7 +125,7 @@ void drawPaddle(Paddle *paddle)
 	int colour = paddle->colour;
 	int x      = paddle->x/100;
 	int y      = paddle->y/100;
-	int width  = paddle->width;
+	int width  = paddle->prevWidth2;
 	int gunMounted = paddle->gunMounted;
 	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, paddle->prev2X, paddle->prev2Y,paddle->prev2X+width-1, paddle->prev2Y, background, 1);
 	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, paddle->prev2X, paddle->prev2Y+1,paddle->prev2X+width-1, paddle->prev2Y+1, background, 1);
@@ -136,11 +136,13 @@ void drawPaddle(Paddle *paddle)
 		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, paddle->prev2X+width/2, paddle->prev2Y-3,paddle->prev2X+width/2, paddle->prev2Y-1, background, 1);
 	}
 
-	coverPaddle(x,y,width,colour,gunMounted);
+	coverPaddle(x,y,paddle->width,colour,gunMounted);
 	paddle->prev2X = paddle->prevX;
 	paddle->prev2Y = paddle->prevY;
 	paddle->prevX=x;
 	paddle->prevY=y;
+	paddle->prevWidth2 = paddle->prevWidth;
+	paddle->prevWidth=paddle->width;
 }
 
 void coverPaddle(int x, int y, int width, int colour, int gunMounted)
@@ -363,6 +365,7 @@ void drawBuff(Buff *buff)
 	if(buff->alive == 1)
 		coverBuff(buff->x/100,buff->y/100,buff->type);
 
+	buff->needsErase--;
 	buff->prev2X=buff->prevX;
 	buff->prev2Y=buff->prevY;
 	buff->prevX=buff->x/100;

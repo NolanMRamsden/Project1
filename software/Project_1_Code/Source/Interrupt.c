@@ -20,7 +20,7 @@ alt_u32 interruptFunction(void* context)
 	int i=0;
 	int j=0;
 
-	if(currentLevel->buff->alive == 1 || currentLevel->buff->needsErase)
+	if(currentLevel->buff->alive == 1)
 	{
 		moveBuff(currentLevel->buff);
 	}
@@ -38,7 +38,7 @@ alt_u32 interruptFunction(void* context)
 		}
 	}
 	//note this must occur after bricks to ensure it is visible over the bricks
-	if(currentLevel->buff->alive == 1 || currentLevel->buff->needsErase)
+	if(currentLevel->buff->alive == 1 || currentLevel->buff->needsErase > 0)
 	{
 		drawBuff(currentLevel->buff);
 	}
