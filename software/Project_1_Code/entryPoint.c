@@ -53,6 +53,7 @@ int main()
 
 	printIntArray(brickArray);
 
+	int level=6;
 	initVGA();
 
 	//pre load the root menu
@@ -66,7 +67,7 @@ int main()
 
 
 	//look up the level from level farm and load it into currentLevel
-	levelLookUp(brickmap,6);
+	levelLookUp(brickmap,level);
 	initLevel(*brickmap);
 	drawStart(currentLevel);   //this is optional here
 	swapBuffers();
@@ -80,13 +81,15 @@ int main()
 	{
 		//input to state machine
 		counter++;
-		if(counter>650000)
+		if(counter>65000)
 		{
 			counter=0;
-			if(getSwitchIndex()== 1)
-				changeState(MenuShow);
-			else
-				changeState(Playing);
+			if(getMenuPB())
+			{
+				while(getMenuPB() != 0);
+				if(currentState == Playing)
+					changeState(MenuShow);
+			}
 		}
 		//flicker changes
 		if(prevState != currentState)
@@ -117,7 +120,13 @@ int main()
 		}else //while were playing we will have to check for other things (all balls gone etc.)
 		{
 			if(currentLevel->brickCount==0)
-				drawText("Completed",37,30,0);
+			{
+				changeState(MenuShow);
+				stopInterrupt();
+				level++;
+				levelLookUp(brickmap,level);
+				initLevel(*brickmap);
+			}
 		}
 	}
 	return 0;

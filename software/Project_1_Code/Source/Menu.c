@@ -32,9 +32,10 @@ void menuLoop()
 			currentMenu.selected = currentMenu.max;
 		clearCharacters();
 		drawMenuText(currentMenu);
-	}else if(press == -10)
+	}
+	if(getMenuPB())
 	{
-		while(getUserInput() != 0);
+		while(getMenuPB() != 0);
 		menuIndexLookUp(currentMenu.optionIndex[currentMenu.selected]);
 	}
 }

@@ -17,11 +17,18 @@ const int scalars[4] = {10,5,-5,-10};
 int getUserInput()
 {
 	int i=0;
-	for(i=0;i<4;i++)
+	for(i=1;i<3;i++)
 	{
 		if( ((IORD_8DIRECT(pushbutton,0) >> i) & 1) == 0)
 			return scalars[i];
 	}
+	return 0;
+}
+
+int getMenuPB()
+{
+	if( ((IORD_8DIRECT(pushbutton,0) >> 3) & 1) == 0)
+				return 1;
 	return 0;
 }
 /*

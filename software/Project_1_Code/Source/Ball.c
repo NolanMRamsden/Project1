@@ -114,7 +114,23 @@ void updatePosition(Ball *ball)
 						}
 						hasBounced=1;
 						updateScore(3);
-						hit(currentLevel->bricks[i][j]);
+						if (brick.isExplosive)
+						{
+							hit(currentLevel->bricks[i-1][j-1]);
+							hit(currentLevel->bricks[i-1][j]);
+							hit(currentLevel->bricks[i-1][j+1]);
+							hit(currentLevel->bricks[i][j-1]);
+							hit(currentLevel->bricks[i][j]);
+							hit(currentLevel->bricks[i][j+1]);
+							hit(currentLevel->bricks[i+1][j-1]);
+							hit(currentLevel->bricks[i+1][j]);
+							hit(currentLevel->bricks[i+1][j+1]);
+						}
+						else
+						{
+							hit(currentLevel->bricks[i][j]);
+						}
+
 					}
 				}
 			}

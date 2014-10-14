@@ -15,10 +15,12 @@ void initBrick(Brick *brick, int x, int y, int health)
 	brick->y = y;
 	brick->health = health;
 	brick->prevHealth  = 0;
+	brick->isIndestructable=0;
+	brick->isExplosive = 0;
 	if(health==5)
 		brick->isIndestructable=1;
-	else
-		brick->isIndestructable=0;
+	if (health==6)
+		brick->isExplosive = 1;
 }
 
 /*
@@ -27,10 +29,18 @@ void initBrick(Brick *brick, int x, int y, int health)
  */
 void hit(Brick *brick)
 {
-	if(brick->isIndestructable == 1)
+	if(brick->isIndestructable == 1 ||
+		brick->health == 0)
+	{
 		return;
-
-	brick->health--;
+	}
+	if (brick->isExplosive ==1)
+	{
+		brick->health =0;
+	}else
+	{
+		brick->health--;
+	}
 	brick->needUpdate = 1;
 	if(brick->health < 0)
 		brick->health=0;

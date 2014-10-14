@@ -52,7 +52,9 @@ void initLevel(BrickMap brickMap)
 	for(i=0;i<maxRows;i++)
 	{
 		for(j=0;j<bricksPerRow;j++)
-			if(brickMap.brickArray[i][j]!=5)
+			if(brickMap.brickArray[i][j] == 6)
+				currentLevel->brickCount += 1;
+			else if(brickMap.brickArray[i][j]!=5)
 				currentLevel->brickCount += brickMap.brickArray[i][j];
 	}
 }
@@ -79,7 +81,8 @@ void drawStart(Level *level)
 			drawBall(level->ball[i]);
 	}
 
-
+	if(level->buff->alive)
+		drawBuff(level->buff);
 	drawPaddle(level->paddle);
 	drawScore(getScore());
 	drawText("BRICK BREAKER",34,1,0);
@@ -146,7 +149,7 @@ void levelLookUp(BrickMap *brickMap, int level)
 		int brickArray[maxRows][bricksPerRow] =
 		{
 			{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,6,6,6,6,6,0,0,6,6,6,6,6,6,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -228,9 +231,9 @@ void levelLookUp(BrickMap *brickMap, int level)
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			{0,0,3,3,3,3,3,0,3,3,3,3,3,0,0},
 			{0,0,3,3,3,3,3,0,3,3,3,3,3,0,0},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,3,3,3,3,3,0,3,3,3,3,3,0,0},
-			{0,0,3,3,3,3,3,0,3,3,3,3,3,0,0},
+			{0,0,3,3,3,3,3,3,3,3,3,3,3,0,0},
+			{0,0,3,3,3,3,3,6,3,3,3,3,3,0,0},
+			{0,0,3,3,3,3,3,3,3,3,3,3,3,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			{0,0,3,3,3,3,3,0,3,3,3,3,3,0,0},
 			{0,0,5,5,5,5,5,0,5,5,5,5,5,0,0},
