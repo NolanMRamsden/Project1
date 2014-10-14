@@ -16,6 +16,7 @@ void initPaddle(Paddle *paddle, int x)
 	paddle->prevX = x*100;
 	paddle->prevY = paddleHeight*100;
 	paddle->width = paddleStartWidth;
+	paddle->prevWidth=paddleStartWidth;
 	paddle->height = paddleThickness;
 	paddle->colour = 0xFAFA;
 }

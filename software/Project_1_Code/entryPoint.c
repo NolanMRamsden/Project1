@@ -96,11 +96,11 @@ int main()
 		{
 			if(currentLevel->brickCount==0)
 			{
-				changeState(MenuShow);
 				stopInterrupt();
 				level++;
 				levelLookUp(brickmap,level);
 				initLevel(*brickmap);
+				prevState= -1;
 			}
 		}
 	}

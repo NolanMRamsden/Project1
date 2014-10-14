@@ -107,9 +107,6 @@ void updatePosition(Ball *ball)
 							{
 								bounceWall(ball);
 								ball->x = (brick.x+brickWidth)*100+100;
-							} else //something went arry, but we hit a brick so just guess
-							{
-								bounceRoof(ball);
 							}
 						}
 						hasBounced=1;

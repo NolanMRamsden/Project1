@@ -35,7 +35,8 @@ void moveBuff(Buff *buff)
 
 	if (buff->y+ ballDiameter*100+100 > bottomScreenBound*100)
 	{
-		buff->alive = 0;
+		buff->alive=0;
+		buff->needsErase=2;
 	}
 
 	if (buff->y >= currentLevel->paddle->y-ballDiameter*100-100
@@ -67,11 +68,7 @@ void moveBuff(Buff *buff)
 					break;
 			}
 			buff->alive=0;
+			buff->needsErase=2;
 		}
 	}//end paddle logic
-}
-
-void hitBottom(Buff *buff)
-{
-	buff->alive=0;
 }

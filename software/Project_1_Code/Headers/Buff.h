@@ -26,6 +26,5 @@ typedef struct Buff
 
 extern void spawnBuff(Buff *buff, int x, int y, int type);
 extern void moveBuff(Buff *buff);
-extern void hitBottom(Buff *buff);
 
 #endif /* BUFF_H_ */
