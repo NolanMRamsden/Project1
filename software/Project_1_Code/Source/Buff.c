@@ -14,7 +14,7 @@ void spawnBuff(Buff *buff, int x, int y, int type)
 	buff->prevX = x;
 	buff->prevY = y;
 	buff->xVelo = 0;
-	buff->yVelo = 50;
+	buff->yVelo = 50 + rand()%100;
 	buff->alive = 1;
 }
 
