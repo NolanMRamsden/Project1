@@ -73,8 +73,8 @@
 #define widthPlusBuff     2
 #define widthMinusBuff    3
 #define gunBuff           4
-#define numBuffs          4
-#define buffFrequency     100
+#define numBuffs          3
+#define buffFrequency     25
 
 //colours
 #define Black           0x0000      /*   0,   0,   0 */
