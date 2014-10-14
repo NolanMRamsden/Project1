@@ -12,7 +12,7 @@ void changeState(int state)
 
 int main()
 {
-	int level=1;
+	int level=6;
 	initVGA();
 
 	//pre load the root menu

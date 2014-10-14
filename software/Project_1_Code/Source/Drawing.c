@@ -178,14 +178,28 @@ void drawBrick (Brick *brick)
 void coverBrick(int x, int y, int health)
 {
 	if (health == 6) {
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y,x+18, y, White, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+1,x+18, y+1, White, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+2,x+18, y+2, White, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+3,x+18, y+3, White, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+4,x+18, y+4, White, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+5,x+18, y+5, White, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+6,x+18, y+6, White, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+7,x+18, y+7, White, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y,x+18, y, Maroon, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+1,x+18, y+1, Maroon, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+2,x+18, y+2, Maroon, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+3,x+18, y+3, Maroon, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+4,x+18, y+4, Maroon, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+5,x+18, y+5, Maroon, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+6,x+18, y+6, Maroon, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+7,x+18, y+7, Maroon, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+1,x+5, y+1, Red, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+13, y+1,x+17, y+1, Red, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+3, y+2,x+3, y+6, Red, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+15, y+2,x+15, y+6, Red, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+7, y+1,x+7, y+6, Red, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+11, y+1,x+11, y+6, Red, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+7, y+1,x+11, y+6, Red, 1);
+
+
+
+
+
+
+
 	}
 
 	else if(health == 5)
