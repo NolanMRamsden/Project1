@@ -100,6 +100,9 @@ void menuIndexLookUp(int index)
 				return;
 			}
 
+			getMenu(&currentMenu, editprofile1Menu, 1);
+			drawMenuText(currentMenu);
+			return;
 			// Load the menu asking to either load the profile, or delete it
 			break;
 
@@ -113,6 +116,11 @@ void menuIndexLookUp(int index)
 				drawMenuText(currentMenu);
 				return;
 			}
+
+			getMenu(&currentMenu, editprofile2Menu, 1);
+			drawMenuText(currentMenu);
+			return;
+			// Load the menu asking to either load the profile, or delete it
 			break;
 		case 8: // Profile 3
 			if(strcmp((*profile_3).name, "new_profile") == 0)
@@ -124,6 +132,72 @@ void menuIndexLookUp(int index)
 				drawMenuText(currentMenu);
 				return;
 			}
+			getMenu(&currentMenu, editprofile3Menu, 1);
+			drawMenuText(currentMenu);
+			return;
+			// Load the menu asking to either load the profile, or delete it
+			break;
+
+		case 9: // Setting the current profile
+			set_current_profile(profile_1);
+			printf("Current profile: %s", (*current_profile).name);
+			// Reload the game
+			changeState(Playing);
+			return;
+
+			break;
+
+		case 10:
+			printf("trying to delete profile 1! \n");
+			// Delete the profile, reload all the profiles, and then reload the profile selection menu
+			delete_profile(1);
+			// reloadProfiles();
+
+			getMenu(&currentMenu, loadprofileMenu, 1);
+			drawMenuText(currentMenu);
+			return;
+
+			break;
+
+		case 11: // Setting the current profile
+			set_current_profile(profile_2);
+			printf("Current profile: %s", (*current_profile).name);
+			// Reload the game
+			changeState(Playing);
+			return;
+			break;
+
+		case 12:
+			printf("trying to delete profile 2! \n");
+			// Delete the profile, reload all the profiles, and then reload the profile selection menu
+			delete_profile(2);
+			// reloadProfiles();
+
+			getMenu(&currentMenu, loadprofileMenu, 1);
+			drawMenuText(currentMenu);
+			return;
+
+
+			break;
+
+		case 13: // Setting the current profile
+			set_current_profile(profile_3);
+			printf("Current profile: %s \n", (*current_profile).name);
+			// Reload the game
+			changeState(Playing);
+			return;
+			break;
+
+		case 14:
+			printf("trying to delete profile 3! \n");
+			// Delete the profile, reload all the profiles, and then reload the profile selection menu
+			delete_profile(3);
+			// reloadProfiles();
+
+			getMenu(&currentMenu, loadprofileMenu, 1);
+			drawMenuText(currentMenu);
+			return;
+
 
 			break;
 	}
@@ -223,6 +297,51 @@ void getMenu(Menu *menu, int index, int pushToStack)
 		menu->optionIndex[1] = 6;
 		menu->optionIndex[2] = 7;
 		menu->optionIndex[3] = 8;
+
+	}else if(index == editprofile1Menu)
+	{
+		// Either Load or Edit the selected Profile
+
+		sprintf(menu->option[0], "    %s", (*profile_1).name);
+		sprintf(menu->option[1], "    Load Profile");
+		sprintf(menu->option[2], "    Delete Profile");
+		sprintf(menu->option[3], "    Placeholder");
+
+		menu->min=1;
+		menu->max=4;
+		menu->selected=1;
+		menu->optionIndex[1] = 9;
+		menu->optionIndex[2] = 10;
+
+	}else if(index == editprofile2Menu)
+	{
+		// Either Load or Edit the selected Profile
+
+		sprintf(menu->option[0], "    %s", (*profile_2).name);
+		sprintf(menu->option[1], "    Load Profile");
+		sprintf(menu->option[2], "    Delete Profile");
+		sprintf(menu->option[3], "    Placeholder");
+
+		menu->min=1;
+		menu->max=4;
+		menu->selected=1;
+		menu->optionIndex[1] = 11;
+		menu->optionIndex[2] = 12;
+
+	}else if(index == editprofile3Menu)
+	{
+		// Either Load or Edit the selected Profile
+
+		sprintf(menu->option[0], "    %s", (*profile_3).name);
+		sprintf(menu->option[1], "    Load Profile");
+		sprintf(menu->option[2], "    Delete Profile");
+		sprintf(menu->option[3], "    Placeholder");
+
+		menu->min=1;
+		menu->max=4;
+		menu->selected=1;
+		menu->optionIndex[1] = 13;
+		menu->optionIndex[2] = 14;
 
 	}
 	else

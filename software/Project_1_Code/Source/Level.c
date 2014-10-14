@@ -7,10 +7,12 @@
 #include "../Headers/Brick.h"
 #include "../Headers/Buff.h"
 #include "../Headers/Level.h"
+#include "../Headers/Profile.h"
+
 #include <stdlib.h>
 
 
-int score;
+// int score;
 
 /*
  * initiliaze all coordinate and health aspects of the level
@@ -45,7 +47,7 @@ void initLevel(BrickMap brickMap)
 	startBall(currentLevel->ball[1],60,topScreenBound+(brickHeight+brickSpacing)*rowHit+brickHeight*1.2,200,200);
 	startBall(currentLevel->ball[2],80,topScreenBound+(brickHeight+brickSpacing)*rowHit+brickHeight*1.2,200,200);
 
-	score = 0;
+	// score = 0;
 	currentLevel->brickCount=0;
 	for(i=0;i<maxRows;i++)
 	{
@@ -79,7 +81,7 @@ void drawStart(Level *level)
 
 
 	drawPaddle(level->paddle);
-	drawScore(score);
+	drawScore(getScore());
 	drawText("BRICK BREAKER",34,1,0);
 	drawAmmo(level->paddle->gunAmmo);
 
@@ -98,8 +100,8 @@ void initAllBricks(Level *level, int initArray[][bricksPerRow])
 
 void updateScore(int value)
 {
-	score+=value;
-	drawScore(score);
+	incrementScore(value);
+	drawScore(getScore());
 }
 
 /*
