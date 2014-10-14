@@ -9,6 +9,7 @@
 #include <stdbool.h>
 #include <SDCard.h>
 #include <altera_up_sd_card_avalon_interface.h>
+#include "../Headers/Definitions.h"
 
 /**
  * Initializes the SD Card Driver
@@ -148,6 +149,19 @@ void printArray(char a[])
 			printf("%d \n",a[h]);
 		h++;
 	}
+}
+
+void printIntArray(int a[][bricksPerRow])
+{
+	int i, j;
+	for (i = 0; i < maxRows; i++) {
+		for (j = 0; j < bricksPerRow; j++) {
+			printf("%i ", a[i][j]);
+		}
+		printf("\n");
+	}
+
+	printf("\n \n");
 }
 
 /*

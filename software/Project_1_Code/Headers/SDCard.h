@@ -29,6 +29,7 @@ void sdcard_fclose(short int file_handle);
 short int sdcard_getFattributes(short int file_handle);
 
 void printArray(char a[]);
+void printIntArray(int a[][bricksPerRow]);
 
 typedef struct
 {
