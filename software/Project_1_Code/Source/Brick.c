@@ -29,7 +29,9 @@ void initBrick(Brick *brick, int x, int y, int health)
  */
 void hit(Brick *brick)
 {
-	if(brick->isIndestructable == 1){
+	if(brick->isIndestructable == 1 ||
+		brick->health == 0)
+	{
 		return;
 	}
 	if (brick->isExplosive ==1)
