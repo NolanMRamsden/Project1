@@ -29,6 +29,7 @@ void initAnonProfile()
 	(*anon_profile).id = 9;
 	current_profile = anon_profile;
 
+
 	return;
 }
 
@@ -337,7 +338,6 @@ void delete_profile(int profile_number)
 	}
 
 
-
 	return;
 }
 
@@ -557,5 +557,11 @@ void updateProfile(Profile* profile)
 	}
 
 	return;
+}
 
+void updateUI()
+{
+	// printf("Updating UI \n");
+	drawText("        ", 15, 1, 0);
+	drawText((*current_profile).name,15,1,0);
 }

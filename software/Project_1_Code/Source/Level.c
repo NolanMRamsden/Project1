@@ -86,6 +86,7 @@ void drawStart(Level *level)
 	drawPaddle(level->paddle);
 	drawScore(getScore());
 	drawText("BRICK BREAKER",34,1,0);
+	updateUI();
 	drawAmmo(level->paddle->gunAmmo);
 
 }
