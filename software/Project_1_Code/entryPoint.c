@@ -13,45 +13,19 @@ void changeState(int state)
 
 int main()
 {
-	sdcard_Init();
-
-	while(!sdcard_isPresent())
-	{
-		printf("No SD Card inserted \n");
-	}
-	while(!sdcard_isFAT16())
-	{
-		printf("SD Card must be FAT16 formatted! \n");
-	}
-
+	//sdcard_Init();
+	current_profile = malloc(sizeof(Profile));
+	BrickMap *brickmap = malloc(sizeof(BrickMap));
 	// score = get_score_from_sd_card(1);
- 	initProfiles();
-
- 	// printf("init profiles \n");
- 	// Example code to write maps
-	int brickArray[maxRows][bricksPerRow] =
-			{
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{1,0,1,1,1,1,1,1,1,1,1,1,1,1,1},
-				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
-			};
-
-	printIntArray(brickArray);
+ 	//initProfiles();
 
 	// Writes the map to profile 1 map 1
-	writeMap(brickArray, 1, 1);
+	//writeMap(brickArray, 1, 1);
 
 	// Reads the map from profile 1 map 1
-	readMap(brickArray, 1, 1);
+	//readMap(brickArray, 1, 1);
 
-	printIntArray(brickArray);
+	//printIntArray(brickArray);
 
 	int level=6;
 	initVGA();
@@ -60,7 +34,7 @@ int main()
 	getMenu(&currentMenu,rootMenu, 1);
 
 	//allocate memory for level farm
-	BrickMap *brickmap = malloc(sizeof(BrickMap));
+
 
 	//set the game to playing
 	prevState=currentState=Playing;
