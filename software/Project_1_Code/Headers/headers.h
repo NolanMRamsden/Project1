@@ -16,7 +16,6 @@
 #include "Menu.h"
 #include "Level.h"
 #include "SDCard.h"
-// #include "Score.h"
 #include "Profile.h"
 
 #endif /* HEADERS_H_ */
