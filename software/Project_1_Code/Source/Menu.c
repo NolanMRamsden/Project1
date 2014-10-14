@@ -84,18 +84,28 @@ void menuIndexLookUp(int index)
 			return;
 
 		case 5: // Root of the profile management
+			if(!sdcard_isPresent() || !sdcard_isFAT16())
+			{
+				printf("Please insert an SD Card \n");
+				return;
+			}
 			printf("test save! \n");
 			getMenu(&currentMenu, loadprofileMenu, 1);
 			drawMenuText(currentMenu);
 			return;
 
 		case 6: // Profile 1
+			if(!sdcard_isPresent() || !sdcard_isFAT16())
+			{
+				printf("Please insert an SD Card \n");
+				return;
+			}
 			if(strcmp((*profile_1).name, "new_profile") == 0)
 			{
 				printf("Creating a new profile \n");
 				(*profile_1).name = "Profile 1";
 				// Reload the selection menu. This profile will appear there now.
-				getMenu(&currentMenu, loadprofileMenu, 1);
+				getMenu(&currentMenu, editprofile1Menu, 1);
 				drawMenuText(currentMenu);
 				return;
 			}
@@ -107,12 +117,17 @@ void menuIndexLookUp(int index)
 			break;
 
 		case 7: // Profile 2
+			if(!sdcard_isPresent() || !sdcard_isFAT16())
+			{
+				printf("Please insert an SD Card \n");
+				return;
+			}
 			if(strcmp((*profile_2).name, "new_profile") == 0)
 			{
 				printf("Creating a new profile \n");
 				(*profile_2).name = "Profile 2";
 				// Reload the selection menu. This profile will appear there now.
-				getMenu(&currentMenu, loadprofileMenu, 1);
+				getMenu(&currentMenu, editprofile2Menu, 1);
 				drawMenuText(currentMenu);
 				return;
 			}
@@ -123,12 +138,17 @@ void menuIndexLookUp(int index)
 			// Load the menu asking to either load the profile, or delete it
 			break;
 		case 8: // Profile 3
+			if(!sdcard_isPresent() || !sdcard_isFAT16())
+			{
+				printf("Please insert an SD Card \n");
+				return;
+			}
 			if(strcmp((*profile_3).name, "new_profile") == 0)
 			{
 				printf("Creating a new profile \n");
 				(*profile_3).name = "Profile 3";
 				// Reload the selection menu. This profile will appear there now.
-				getMenu(&currentMenu, loadprofileMenu, 1);
+				getMenu(&currentMenu, editprofile3Menu, 1);
 				drawMenuText(currentMenu);
 				return;
 			}
@@ -139,6 +159,11 @@ void menuIndexLookUp(int index)
 			break;
 
 		case 9: // Setting the current profile
+			if(!sdcard_isPresent() || !sdcard_isFAT16())
+			{
+				printf("Please insert an SD Card \n");
+				return;
+			}
 			set_current_profile(profile_1);
 			printf("Current profile: %s", (*current_profile).name);
 			// Reload the game
@@ -148,6 +173,11 @@ void menuIndexLookUp(int index)
 			break;
 
 		case 10:
+			if(!sdcard_isPresent() || !sdcard_isFAT16())
+			{
+				printf("Please insert an SD Card \n");
+				return;
+			}
 			printf("trying to delete profile 1! \n");
 			// Delete the profile, reload all the profiles, and then reload the profile selection menu
 			delete_profile(1);
@@ -160,6 +190,11 @@ void menuIndexLookUp(int index)
 			break;
 
 		case 11: // Setting the current profile
+			if(!sdcard_isPresent() || !sdcard_isFAT16())
+			{
+				printf("Please insert an SD Card \n");
+				return;
+			}
 			set_current_profile(profile_2);
 			printf("Current profile: %s", (*current_profile).name);
 			// Reload the game
@@ -168,6 +203,11 @@ void menuIndexLookUp(int index)
 			break;
 
 		case 12:
+			if(!sdcard_isPresent() || !sdcard_isFAT16())
+			{
+				printf("Please insert an SD Card \n");
+				return;
+			}
 			printf("trying to delete profile 2! \n");
 			// Delete the profile, reload all the profiles, and then reload the profile selection menu
 			delete_profile(2);
@@ -181,6 +221,11 @@ void menuIndexLookUp(int index)
 			break;
 
 		case 13: // Setting the current profile
+			if(!sdcard_isPresent() || !sdcard_isFAT16())
+			{
+				printf("Please insert an SD Card \n");
+				return;
+			}
 			set_current_profile(profile_3);
 			printf("Current profile: %s \n", (*current_profile).name);
 			// Reload the game
@@ -189,6 +234,11 @@ void menuIndexLookUp(int index)
 			break;
 
 		case 14:
+			if(!sdcard_isPresent() || !sdcard_isFAT16())
+			{
+				printf("Please insert an SD Card \n");
+				return;
+			}
 			printf("trying to delete profile 3! \n");
 			// Delete the profile, reload all the profiles, and then reload the profile selection menu
 			delete_profile(3);
@@ -199,6 +249,19 @@ void menuIndexLookUp(int index)
 			return;
 
 
+			break;
+
+		case 15:
+			if(!sdcard_isPresent() || !sdcard_isFAT16())
+			{
+				printf("Please insert an SD Card \n");
+				return;
+			}
+			// Saving the data of the current profile
+			updateProfile(current_profile);
+
+			changeState(Playing);
+			return;
 			break;
 	}
 }
@@ -225,16 +288,16 @@ void getMenu(Menu *menu, int index, int pushToStack)
 	{
 		sprintf(menu->option[0],"    Main Menu");
 		sprintf(menu->option[1],"     Resume");
-		sprintf(menu->option[2],"     Profile");
+		sprintf(menu->option[2],"     Profiles");
 		sprintf(menu->option[3],"     Settings");
-		sprintf(menu->option[4],"      Exit");
+		sprintf(menu->option[4],"     Save Game");
 		menu->min=1;
 		menu->max=4;
 		menu->selected=1;
 		menu->optionIndex[1] = 1;  //resume
-		menu->optionIndex[2] = 2;
+		menu->optionIndex[2] = 5;
 		menu->optionIndex[3] = 3;
-		menu->optionIndex[4] = 0;  //exit
+		menu->optionIndex[4] = 15;  //save game
 	}else if (index == pauseMenu)
 	{
 		sprintf(menu->option[0],"  Pause Menu");
@@ -249,14 +312,14 @@ void getMenu(Menu *menu, int index, int pushToStack)
 		sprintf(menu->option[1],"     Volume");
 		sprintf(menu->option[2],"   Game Speed");
 		sprintf(menu->option[3],"     Scores");
-		sprintf(menu->option[4],"    Test Save");
+		// sprintf(menu->option[4],"    Test Save");
 		menu->min=1;
 		menu->max=4;
 		menu->selected=1;
 		menu->optionIndex[1] = 0;
 		menu->optionIndex[2] = 0;
 		menu->optionIndex[3] = 4;
-		menu->optionIndex[4] = 5;
+		// menu->optionIndex[4] = 5;
 	}
 	else if(index == scoreMenu)
 	{
@@ -279,7 +342,7 @@ void getMenu(Menu *menu, int index, int pushToStack)
 		menu->min=1;
 		menu->max=4;
 		menu->selected=1;
-		menu->optionIndex[1] = 0;
+		menu->optionIndex[1] = 15;
 		menu->optionIndex[2] = 0;
 		menu->optionIndex[3] = 0;
 	}else if(index == loadprofileMenu)
@@ -305,7 +368,7 @@ void getMenu(Menu *menu, int index, int pushToStack)
 		sprintf(menu->option[0], "    %s", (*profile_1).name);
 		sprintf(menu->option[1], "    Load Profile");
 		sprintf(menu->option[2], "    Delete Profile");
-		sprintf(menu->option[3], "    Placeholder");
+		sprintf(menu->option[3], "    Maps");
 
 		menu->min=1;
 		menu->max=4;
@@ -320,7 +383,7 @@ void getMenu(Menu *menu, int index, int pushToStack)
 		sprintf(menu->option[0], "    %s", (*profile_2).name);
 		sprintf(menu->option[1], "    Load Profile");
 		sprintf(menu->option[2], "    Delete Profile");
-		sprintf(menu->option[3], "    Placeholder");
+		sprintf(menu->option[3], "    Maps");
 
 		menu->min=1;
 		menu->max=4;
@@ -335,7 +398,7 @@ void getMenu(Menu *menu, int index, int pushToStack)
 		sprintf(menu->option[0], "    %s", (*profile_3).name);
 		sprintf(menu->option[1], "    Load Profile");
 		sprintf(menu->option[2], "    Delete Profile");
-		sprintf(menu->option[3], "    Placeholder");
+		sprintf(menu->option[3], "    Maps");
 
 		menu->min=1;
 		menu->max=4;
