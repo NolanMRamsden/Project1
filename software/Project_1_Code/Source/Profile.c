@@ -23,25 +23,6 @@ Profile* anon_profile = NULL;
 
 void initProfiles()
 {
-	// printf("init profiles \n");
-	int brickArray[maxRows][bricksPerRow] =
-			{
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
-			};
-	printIntArray(brickArray);
-
-	readMap(brickArray, 1, 1);
-
-	printIntArray(brickArray);
 
 	profile_1 = malloc(sizeof(Profile));
 	profile_2 = malloc(sizeof(Profile));
@@ -114,6 +95,7 @@ void get_name_from_sd_card(char* name, int profile_number)
 			break;
 		default:
 			file_handle = sdcard_fopen("p/1/n.txt");
+			break;
 	}
 	sdcard_ReadFile(name, file_handle);
 	while(true)
@@ -213,7 +195,7 @@ char* convert_string_to_string_for_write(char* name, char file_name[], char name
 {
 	int i = 0;
 	int j = 0;
-	char read_data[100] = {0};
+	char read_data[200] = {0};
 
 	// Covert string to string (will cut it off at the null terminator)
 	sprintf(name_string, "%s", name);
@@ -371,6 +353,107 @@ void incrementScore(int value)
 	return;
 }
 
+void writeMap(int map_array[][bricksPerRow], int profile_number, int map_number )
+{
+
+	// Read data from the map file
+	char* char_map = malloc((bricksPerRow * maxRows)* sizeof(char));
+	char* char_write = malloc((bricksPerRow*maxRows)*sizeof(char) + 50);
+	short int file_handle;
+
+	int i, j = 0; // Iterate through the parameter array
+	int k = 0; // Iterate through the SD card data
+
+
+	for (i = 0; i < maxRows; i++) {
+		for (j = 0; j < bricksPerRow; j++) {
+			char_map[k] = (char)(((int)'0')+map_array[i][j]);
+			k++;
+		}
+	}
+
+	// Avoiding manipulating strings due to some previous problems with memory
+	switch(profile_number)
+	{
+		case 1:
+			switch(map_number)
+			{
+				case 1:
+					convert_string_to_string_for_write(char_map, "p/1/1.txt", char_write);
+					file_handle = sdcard_fopen("p/1/1.txt");
+					printf("%i \n", file_handle);
+					break;
+				case 2:
+					convert_string_to_string_for_write(char_map, "p/1/2.txt", char_write);
+					file_handle = sdcard_fopen("p/1/2.txt");
+					break;
+				case 3:
+					convert_string_to_string_for_write(char_map, "p/1/3.txt", char_write);
+					file_handle = sdcard_fopen("p/1/3.txt");
+					break;
+			}
+			break;
+		case 2:
+			switch(map_number)
+			{
+				case 1:
+					convert_string_to_string_for_write(char_map, "p/2/1.txt", char_write);
+					file_handle = sdcard_fopen("p/2/1.txt");
+					break;
+				case 2:
+					convert_string_to_string_for_write(char_map, "p/2/2.txt", char_write);
+					file_handle = sdcard_fopen("p/2/2.txt");
+					break;
+				case 3:
+					convert_string_to_string_for_write(char_map, "p/2/3.txt", char_write);
+					file_handle = sdcard_fopen("p/2/3.txt");
+					break;
+			}
+			break;
+		case 3:
+			switch(map_number)
+			{
+				case 1:
+					convert_string_to_string_for_write(char_map, "p/3/1.txt", char_write);
+					file_handle = sdcard_fopen("p/3/1.txt");
+					break;
+				case 2:
+					convert_string_to_string_for_write(char_map, "p/3/2.txt", char_write);
+					file_handle = sdcard_fopen("p/3/2.txt");
+					break;
+				case 3:
+					convert_string_to_string_for_write(char_map, "p/3/3.txt", char_write);
+					file_handle = sdcard_fopen("p/3/3.txt");
+					break;
+			}
+			break;
+
+		default:
+			switch(map_number)
+			{
+				case 1:
+					convert_string_to_string_for_write(char_map, "p/1/1.txt", char_write);
+					file_handle = sdcard_fopen("p/1/1.txt");
+					printf("%i \n", file_handle);
+					break;
+				case 2:
+					convert_string_to_string_for_write(char_map, "p/1/2.txt", char_write);
+					file_handle = sdcard_fopen("p/1/2.txt");
+					break;
+				case 3:
+					convert_string_to_string_for_write(char_map, "p/1/3.txt", char_write);
+					file_handle = sdcard_fopen("p/1/3.txt");
+					break;
+			}
+			break;
+	}
+
+	sdcard_WriteFile(char_write, file_handle);
+	sdcard_fclose(file_handle);
+
+	return;
+}
+
 void readMap(int map_array[][bricksPerRow], int profile_number, int map_number )
 {
 
@@ -442,6 +525,7 @@ void readMap(int map_array[][bricksPerRow], int profile_number, int map_number )
 			break;
 	}
 	sdcard_ReadFile(char_map, file_handle);
+	sdcard_fclose(file_handle);
 
 	int i, j = 0; // Iterate through the parameter array
 	int k = 0; // Iterate through the SD card data
@@ -454,7 +538,6 @@ void readMap(int map_array[][bricksPerRow], int profile_number, int map_number )
 		}
 	}
 
-	sdcard_fclose(file_handle);
 	return;
 }
 

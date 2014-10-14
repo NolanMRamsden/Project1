@@ -36,6 +36,9 @@ extern void reloadProfiles();
 extern int getScore();
 extern void incrementScore(int value);
 
+extern void readMap(int map_array[][bricksPerRow], int profile_number, int map_number );
+extern void writeMap(int map_array[][bricksPerRow], int profile_number, int map_number );
+
 void delete_profile(int profile_number);
 
 int get_score_from_sd_card(int profile_number);
@@ -48,7 +51,6 @@ void set_current_profile(Profile* profile);
 
 void updateProfile(Profile* profile); // Saves the profile to SD Card
 
-void readMap(int map_array[][bricksPerRow], int profile_number, int map_number );
 // Helpers
 char* convert_integer_to_string_for_write(int score, char file_name[], char score_string[]);
 char* convert_string_to_string_for_write(char* name, char file_name[], char name_string[]);

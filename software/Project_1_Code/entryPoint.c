@@ -26,6 +26,33 @@ int main()
 
 	// score = get_score_from_sd_card(1);
  	initProfiles();
+
+ 	// printf("init profiles \n");
+ 	// Example code to write maps
+	int brickArray[maxRows][bricksPerRow] =
+			{
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{1,0,1,1,1,1,1,1,1,1,1,1,1,1,1},
+				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
+			};
+
+	printIntArray(brickArray);
+
+	// Writes the map to profile 1 map 1
+	writeMap(brickArray, 1, 1);
+
+	// Reads the map from profile 1 map 1
+	readMap(brickArray, 1, 1);
+
+	printIntArray(brickArray);
+
 	initVGA();
 
 	//pre load the root menu
