@@ -13,8 +13,9 @@ void changeState(int state)
 
 int main()
 {
-	//sdcard_Init();
-	current_profile = malloc(sizeof(Profile));
+	sdcard_Init();
+
+	initAnonProfile();
 	BrickMap *brickmap = malloc(sizeof(BrickMap));
 	// score = get_score_from_sd_card(1);
  	//initProfiles();

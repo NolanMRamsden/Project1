@@ -21,6 +21,17 @@ Profile* profile_3 = NULL;
 Profile* current_profile = NULL;
 Profile* anon_profile = NULL;
 
+void initAnonProfile()
+{
+	anon_profile = malloc(sizeof(Profile));
+	(*anon_profile).score = 0;
+	(*anon_profile).name = "anonymous"; // This currently will never show up, put in just in case
+	(*anon_profile).id = 9;
+	current_profile = anon_profile;
+
+	return;
+}
+
 void initProfiles()
 {
 
@@ -28,7 +39,6 @@ void initProfiles()
 	profile_2 = malloc(sizeof(Profile));
 	profile_3 = malloc(sizeof(Profile));
 
-	anon_profile = malloc(sizeof(Profile));
 
 
 	initProfile(profile_1, 1);
@@ -36,10 +46,7 @@ void initProfiles()
 	initProfile(profile_3, 3);
 
 	// Set the current profile to a temporary anonymous profile
-	(*anon_profile).score = 0;
-	(*anon_profile).name = "anonymous"; // This currently will never show up, put in just in case
-	(*anon_profile).id = 9;
-	current_profile = anon_profile;
+
 
 	 printf("finished init! \n");
 	 printf("profile 1 score: %i \n", (*profile_1).score);

@@ -29,6 +29,7 @@ extern Profile* current_profile;
 // x represents the the number of the profile. Generally, we will only load 3.
 extern void initProfile(Profile* profile, int x);
 extern void initProfiles();
+extern void initAnonProfile();
 
 extern void reloadProfile(Profile* profile, int x);
 extern void reloadProfiles();

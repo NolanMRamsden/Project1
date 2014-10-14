@@ -90,7 +90,10 @@ void menuIndexLookUp(int index)
 				printf("Please insert an SD Card \n");
 				return;
 			}
-			printf("test save! \n");
+			if(profile_1 == NULL)
+			{
+				initProfiles();
+			}
 			getMenu(&currentMenu, loadprofileMenu, 1);
 			drawMenuText(currentMenu);
 			return;
