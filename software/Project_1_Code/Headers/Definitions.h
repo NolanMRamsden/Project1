@@ -37,6 +37,7 @@
 #define profileMenu    13
 #define scoreMenu      14
 #define loadprofileMenu 15
+#define editprofileMenu 16
 
 //Menu stuff
 #define menuOffset     50

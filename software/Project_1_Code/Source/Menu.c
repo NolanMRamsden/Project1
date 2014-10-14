@@ -6,6 +6,7 @@
  */
 #include "../Headers/Menu.h"
 #include "../Headers/Profile.h"
+#include <string.h>
 
 /*
  * abstract menu loop that executes tied commands when left key is pressed
@@ -82,11 +83,49 @@ void menuIndexLookUp(int index)
 			drawMenuText(currentMenu);
 			return;
 
-		case 5:
+		case 5: // Root of the profile management
 			printf("test save! \n");
 			getMenu(&currentMenu, loadprofileMenu, 1);
 			drawMenuText(currentMenu);
 			return;
+
+		case 6: // Profile 1
+			if(strcmp((*profile_1).name, "new_profile") == 0)
+			{
+				printf("Creating a new profile \n");
+				(*profile_1).name = "Profile 1";
+				// Reload the selection menu. This profile will appear there now.
+				getMenu(&currentMenu, loadprofileMenu, 1);
+				drawMenuText(currentMenu);
+				return;
+			}
+
+			// Load the menu asking to either load the profile, or delete it
+			break;
+
+		case 7: // Profile 2
+			if(strcmp((*profile_2).name, "new_profile") == 0)
+			{
+				printf("Creating a new profile \n");
+				(*profile_2).name = "Profile 2";
+				// Reload the selection menu. This profile will appear there now.
+				getMenu(&currentMenu, loadprofileMenu, 1);
+				drawMenuText(currentMenu);
+				return;
+			}
+			break;
+		case 8: // Profile 3
+			if(strcmp((*profile_3).name, "new_profile") == 0)
+			{
+				printf("Creating a new profile \n");
+				(*profile_3).name = "Profile 3";
+				// Reload the selection menu. This profile will appear there now.
+				getMenu(&currentMenu, loadprofileMenu, 1);
+				drawMenuText(currentMenu);
+				return;
+			}
+
+			break;
 	}
 }
 
@@ -174,16 +213,16 @@ void getMenu(Menu *menu, int index, int pushToStack)
 		// Load the names from the available profiles (loading scores for now)
 
 		sprintf(menu->option[0], "    Profiles");
-		sprintf(menu->option[1], "%i", (*profile_1).score);
-		sprintf(menu->option[2], "%i", (*profile_2).score);
-		sprintf(menu->option[3], "%i", (*profile_3).score);
+		sprintf(menu->option[1], "    %s    Score: %i", (*profile_1).name, (*profile_1).score);
+		sprintf(menu->option[2], "    %s    Score: %i", (*profile_2).name, (*profile_2).score);
+		sprintf(menu->option[3], "    %s    Score: %i", (*profile_3).name, (*profile_3).score);
 
 		menu->min=1;
 		menu->max=4;
 		menu->selected=1;
-		menu->optionIndex[1] = 0;
-		menu->optionIndex[2] = 0;
-		menu->optionIndex[3] = 0;
+		menu->optionIndex[1] = 6;
+		menu->optionIndex[2] = 7;
+		menu->optionIndex[3] = 8;
 
 	}
 	else
