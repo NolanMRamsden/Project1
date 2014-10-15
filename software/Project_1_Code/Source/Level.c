@@ -21,7 +21,7 @@
 void initLevel(BrickMap brickMap)
 {
 	currentLevel->buff=malloc(sizeof(Buff));
-	spawnBuff(currentLevel->buff,topScreenBound + 1,bottomScreenBound + 1, 0);
+	spawnBuff(currentLevel->buff,rightScreenBound + 3,bottomScreenBound + 3, 0);
 	currentLevel->buff->alive=0;
 	int i=0,j=0;
 	for(i=0;i<maxBalls;i++)
