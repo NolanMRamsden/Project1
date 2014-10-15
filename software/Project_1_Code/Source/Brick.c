@@ -34,6 +34,8 @@ void hit(Brick *brick)
 	{
 		return;
 	}
+	// Increment the Bricks Hit
+	incrementBricksHit(1);
 	if (brick->isExplosive ==1)
 	{
 		brick->health =0;

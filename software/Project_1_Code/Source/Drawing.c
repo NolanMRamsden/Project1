@@ -350,6 +350,9 @@ void drawScore(int score)
 	char *str = malloc(sizeof(char));
 	sprintf(str,"%d  ",score);
 	drawText(str,1,1,0);
+
+	free(str);
+	str = NULL;
 }
 
 void drawAmmo(int ammo)
@@ -398,4 +401,14 @@ void coverBuff(int x, int y, int type)
 	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+4,x+6, y+4, colour, 1);
 	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+5,x+5, y+5, colour, 1);
 	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+6,x+4, y+6, colour, 1);
+}
+
+void drawInt(int value, int x, int y)
+{
+	char *str = malloc(sizeof(char));
+	sprintf(str,"%d  ",value);
+	drawText(str,1,1,0);
+
+	free(str);
+	str = NULL;
 }

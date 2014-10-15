@@ -65,6 +65,8 @@ void updatePosition(Ball *ball)
 			if(ball->x >= currentLevel->paddle->x - ballDiameter*100-100
 			&& ball->x <= currentLevel->paddle->x + currentLevel->paddle->width*100 + 100)
 			{
+				// Paddle has been hit, increase the statistic
+				incrementPaddleHits(1);
 				//mapped the paddle to a pyramid, we can improve this logic later
 				ball->xVelo += ((ball->x+ballDiameter*50)-(currentLevel->paddle->x+currentLevel->paddle->width*50))/paddleBounceScale;
 				bounceRoof(ball);

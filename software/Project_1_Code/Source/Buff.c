@@ -45,6 +45,11 @@ void moveBuff(Buff *buff)
 		if(buff->x >= currentLevel->paddle->x - ballDiameter*100-100
 		&& buff->x <= currentLevel->paddle->x + currentLevel->paddle->width*100 + 100)
 		{
+			// Increment the buffs statistic
+			if(buff->type != widthMinusBuff)
+			{
+				incrementBuffsCaught(1);
+			}
 			switch (buff->type)
 			{
 				case pointsBuff:

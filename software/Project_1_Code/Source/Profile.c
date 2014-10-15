@@ -25,6 +25,10 @@ void initAnonProfile()
 {
 	anon_profile = malloc(sizeof(Profile));
 	(*anon_profile).score = 0;
+	(*anon_profile).bricks_hit = 0;
+	(*anon_profile).paddle_hits = 0;
+	(*anon_profile).buffs_caught = 0;
+	(*anon_profile).current_level = 1;
 	(*anon_profile).name = "anonymous"; // This currently will never show up, put in just in case
 	(*anon_profile).id = 9;
 	current_profile = anon_profile;
@@ -77,6 +81,11 @@ void reloadProfile(Profile* profile, int profile_number)
 void initProfile(Profile* profile, int profile_number)
 {
 	(*profile).score = get_score_from_sd_card(profile_number);
+	(*profile).bricks_hit = get_bricks_hit_from_sd_card(profile_number);
+	(*profile).paddle_hits = get_paddle_hits_from_sd_card(profile_number);
+	(*profile).buffs_caught = get_buffs_caught_from_sd_card(profile_number);
+	(*profile).current_level = get_current_level_from_sd_card(profile_number);
+
 	(*profile).name = malloc(50 * sizeof(char));
 	(*profile).id = profile_number;
 
@@ -166,6 +175,174 @@ int get_score_from_sd_card(int profile_number)
 	sdcard_fclose(file_handle);
 
 	return score;
+}
+
+/**
+ * Retrieves paddle hits from the SD card
+ */
+int get_paddle_hits_from_sd_card(int profile_number)
+{
+
+	char * read_data = malloc(50 * sizeof(char));
+
+	int paddle_hits = 0;
+	short int file_handle;
+
+	switch(profile_number)
+	{
+		case 1:
+			file_handle = sdcard_fopen("p/1/ph.txt");
+			break;
+		case 2:
+			file_handle = sdcard_fopen("p/2/ph.txt");
+			break;
+		case 3:
+			file_handle = sdcard_fopen("p/3/ph.txt");
+			break;
+		default:
+			file_handle = sdcard_fopen("p/1/ph.txt");
+			break;
+	}
+
+	if(profile_number == 3){
+		printf("File handle: %hi \n", file_handle);
+	}
+	sdcard_ReadFile(read_data, file_handle); // Reads the score file into the supplied character buffer
+
+	// Convert the char array to an integer score
+	paddle_hits = atoi(read_data);
+
+	free(read_data);
+	read_data = NULL;
+	sdcard_fclose(file_handle);
+
+	return paddle_hits;
+}
+
+/**
+ * Retrieves current level from the SD card
+ */
+int get_current_level_from_sd_card(int profile_number)
+{
+
+	char * read_data = malloc(50 * sizeof(char));
+
+	int current_level = 0;
+	short int file_handle;
+
+	switch(profile_number)
+	{
+		case 1:
+			file_handle = sdcard_fopen("p/1/l.txt");
+			break;
+		case 2:
+			file_handle = sdcard_fopen("p/2/l.txt");
+			break;
+		case 3:
+			file_handle = sdcard_fopen("p/3/l.txt");
+			break;
+		default:
+			file_handle = sdcard_fopen("p/1/l.txt");
+			break;
+	}
+
+	if(profile_number == 3){
+		printf("File handle: %hi \n", file_handle);
+	}
+	sdcard_ReadFile(read_data, file_handle); // Reads the score file into the supplied character buffer
+
+	// Convert the char array to an integer score
+	current_level = atoi(read_data);
+
+	free(read_data);
+	read_data = NULL;
+	sdcard_fclose(file_handle);
+
+	return current_level;
+}
+
+/**
+ * Retrieves brick hits from the SD card
+ */
+int get_bricks_hit_from_sd_card(int profile_number)
+{
+
+	char * read_data = malloc(50 * sizeof(char));
+
+	int brick_hits = 0;
+	short int file_handle;
+
+	switch(profile_number)
+	{
+		case 1:
+			file_handle = sdcard_fopen("p/1/bh.txt");
+			break;
+		case 2:
+			file_handle = sdcard_fopen("p/2/bh.txt");
+			break;
+		case 3:
+			file_handle = sdcard_fopen("p/3/bh.txt");
+			break;
+		default:
+			file_handle = sdcard_fopen("p/1/bh.txt");
+			break;
+	}
+
+	if(profile_number == 3){
+		printf("File handle: %hi \n", file_handle);
+	}
+	sdcard_ReadFile(read_data, file_handle); // Reads the score file into the supplied character buffer
+
+	// Convert the char array to an integer score
+	brick_hits = atoi(read_data);
+
+	free(read_data);
+	read_data = NULL;
+	sdcard_fclose(file_handle);
+
+	return brick_hits;
+}
+
+/**
+ * Retrieves buffs caught from the SD card
+ */
+int get_buffs_caught_from_sd_card(int profile_number)
+{
+
+	char * read_data = malloc(50 * sizeof(char));
+
+	int balls_caught = 0;
+	short int file_handle;
+
+	switch(profile_number)
+	{
+		case 1:
+			file_handle = sdcard_fopen("p/1/bc.txt");
+			break;
+		case 2:
+			file_handle = sdcard_fopen("p/2/bc.txt");
+			break;
+		case 3:
+			file_handle = sdcard_fopen("p/3/bc.txt");
+			break;
+		default:
+			file_handle = sdcard_fopen("p/1/bc.txt");
+			break;
+	}
+
+	if(profile_number == 3){
+		printf("File handle: %hi \n", file_handle);
+	}
+	sdcard_ReadFile(read_data, file_handle); // Reads the score file into the supplied character buffer
+
+	// Convert the char array to an integer score
+	balls_caught = atoi(read_data);
+
+	free(read_data);
+	read_data = NULL;
+	sdcard_fclose(file_handle);
+
+	return balls_caught;
 }
 
 char* convert_integer_to_string_for_write(int score, char file_name[], char score_string[])
@@ -266,6 +443,150 @@ void write_score_to_sd_card(int score, int profile_number)
 	return;
 }
 
+void write_bricks_hit_to_sd_card(int value, int profile_number)
+{
+	char value_string[100] = {0};
+	short int file_handle;
+
+	switch(profile_number)
+	{
+		case 1:
+			convert_integer_to_string_for_write(value, "p/1/bh.txt", value_string);
+			file_handle = sdcard_fopen("p/1/bh.txt", true);
+			break;
+
+		case 2:
+			convert_integer_to_string_for_write(value, "p/2/bh.txt", value_string);
+			file_handle = sdcard_fopen("p/2/bh.txt", true);
+			break;
+
+		case 3:
+			convert_integer_to_string_for_write(value, "p/3/bh.txt", value_string);
+			file_handle = sdcard_fopen("p/3/bh.txt", true);
+			break;
+
+		default:
+			convert_integer_to_string_for_write(value, "p/1/bh.txt", value_string);
+			file_handle = sdcard_fopen("p/1/bh.txt", true);
+			break;
+
+	}
+
+	sdcard_WriteFile(value_string, file_handle);
+	sdcard_fclose(file_handle);
+	printf("Stored value: %s \n", value_string);
+
+	return;
+}
+
+void write_current_level_to_sd_card(int value, int profile_number)
+{
+	char value_string[100] = {0};
+	short int file_handle;
+
+	switch(profile_number)
+	{
+		case 1:
+			convert_integer_to_string_for_write(value, "p/1/l.txt", value_string);
+			file_handle = sdcard_fopen("p/1/l.txt", true);
+			break;
+
+		case 2:
+			convert_integer_to_string_for_write(value, "p/2/l.txt", value_string);
+			file_handle = sdcard_fopen("p/2/l.txt", true);
+			break;
+
+		case 3:
+			convert_integer_to_string_for_write(value, "p/3/l.txt", value_string);
+			file_handle = sdcard_fopen("p/3/l.txt", true);
+			break;
+
+		default:
+			convert_integer_to_string_for_write(value, "p/1/l.txt", value_string);
+			file_handle = sdcard_fopen("p/1/l.txt", true);
+			break;
+
+	}
+
+	sdcard_WriteFile(value_string, file_handle);
+	sdcard_fclose(file_handle);
+	printf("Stored value: %s \n", value_string);
+
+	return;
+}
+
+void write_paddle_hits_to_sd_card(int value, int profile_number)
+{
+	char value_string[100] = {0};
+	short int file_handle;
+
+	switch(profile_number)
+	{
+		case 1:
+			convert_integer_to_string_for_write(value, "p/1/ph.txt", value_string);
+			file_handle = sdcard_fopen("p/1/ph.txt", true);
+			break;
+
+		case 2:
+			convert_integer_to_string_for_write(value, "p/2/ph.txt", value_string);
+			file_handle = sdcard_fopen("p/2/ph.txt", true);
+			break;
+
+		case 3:
+			convert_integer_to_string_for_write(value, "p/3/ph.txt", value_string);
+			file_handle = sdcard_fopen("p/3/ph.txt", true);
+			break;
+
+		default:
+			convert_integer_to_string_for_write(value, "p/1/ph.txt", value_string);
+			file_handle = sdcard_fopen("p/1/ph.txt", true);
+			break;
+
+	}
+
+	sdcard_WriteFile(value_string, file_handle);
+	sdcard_fclose(file_handle);
+	printf("Stored value: %s \n", value_string);
+
+	return;
+}
+
+void write_buffs_caught_to_sd_card(int value, int profile_number)
+{
+	char value_string[100] = {0};
+	short int file_handle;
+
+	switch(profile_number)
+	{
+		case 1:
+			convert_integer_to_string_for_write(value, "p/1/bc.txt", value_string);
+			file_handle = sdcard_fopen("p/1/bc.txt", true);
+			break;
+
+		case 2:
+			convert_integer_to_string_for_write(value, "p/2/bc.txt", value_string);
+			file_handle = sdcard_fopen("p/2/bc.txt", true);
+			break;
+
+		case 3:
+			convert_integer_to_string_for_write(value, "p/3/bc.txt", value_string);
+			file_handle = sdcard_fopen("p/3/bc.txt", true);
+			break;
+
+		default:
+			convert_integer_to_string_for_write(value, "p/1/bc.txt", value_string);
+			file_handle = sdcard_fopen("p/1/bc.txt", true);
+			break;
+
+	}
+
+	sdcard_WriteFile(value_string, file_handle);
+	sdcard_fclose(file_handle);
+	printf("Stored value: %s \n", value_string);
+
+	return;
+}
+
 void write_name_to_sd_card(char* name, int profile_number)
 {
 	char name_string[100] = {0};
@@ -314,24 +635,41 @@ void delete_profile(int profile_number)
 			(*profile_1).name = "new_profile";
 			(*profile_1).score = 0;
 			write_score_to_sd_card(0, 1);
+			write_bricks_hit_to_sd_card(0, 1);
+			write_paddle_hits_to_sd_card(0, 1);
+			write_buffs_caught_to_sd_card(0, 1);
+			write_current_level_to_sd_card(1, 1);
+
 			write_name_to_sd_card("new_profile", 1);
 			break;
 		case 2:
 			(*profile_2).name = "new_profile";
 			(*profile_2).score = 0;
 			write_score_to_sd_card(0,2);
+			write_bricks_hit_to_sd_card(0, 2);
+			write_paddle_hits_to_sd_card(0, 2);
+			write_buffs_caught_to_sd_card(0, 2);
+			write_current_level_to_sd_card(1, 2);
 			write_name_to_sd_card("new_profile", 2);
 			break;
 		case 3:
 			(*profile_3).name = "new_profile";
 			(*profile_3).score = 0;
 			write_score_to_sd_card(0,3);
+			write_bricks_hit_to_sd_card(0, 3);
+			write_paddle_hits_to_sd_card(0, 3);
+			write_buffs_caught_to_sd_card(0, 3);
+			write_current_level_to_sd_card(1, 3);
 			write_name_to_sd_card("new_profile", 3);
 			break;
 		default:
 			(*profile_1).name = "new_profile";
 			(*profile_1).score = 0;
 			write_score_to_sd_card(0,1);
+			write_bricks_hit_to_sd_card(0, 1);
+			write_paddle_hits_to_sd_card(0, 1);
+			write_buffs_caught_to_sd_card(0, 1);
+			write_current_level_to_sd_card(1, 1);
 			write_name_to_sd_card("new_profile", 1);
 			break;
 
@@ -353,12 +691,61 @@ int getScore()
 	return (*current_profile).score;
 }
 
+int getBricksHit()
+{
+	return (*current_profile).bricks_hit;
+}
+
+int getPaddleHits()
+{
+	return (*current_profile).paddle_hits;
+}
+
+int getCurrentLevel()
+{
+	return (*current_profile).current_level;
+}
+
+int getBuffsCaught()
+{
+	return (*current_profile).buffs_caught;
+}
+
 void incrementScore(int value)
 {
 	(*current_profile).score += value;
 
 	return;
 }
+
+void incrementBricksHit(int value)
+{
+	(*current_profile).bricks_hit += value;
+
+	return;
+}
+
+void incrementPaddleHits(int value)
+{
+	(*current_profile).paddle_hits += value;
+
+	return;
+}
+
+void incrementBuffsCaught(int value)
+{
+	(*current_profile).buffs_caught += value;
+
+	return;
+}
+
+void incrementCurrentLevel(int value)
+{
+	(*current_profile).current_level += value;
+
+	return;
+}
+
 
 void writeMap(int map_array[][bricksPerRow], int profile_number, int map_number )
 {
@@ -553,6 +940,11 @@ void updateProfile(Profile* profile)
 	if( (((*profile).id == 1) || ((*profile).id == 2)) || ( (*profile).id == 3) )
 	{
 		write_score_to_sd_card((*profile).score, (*profile).id);
+		write_bricks_hit_to_sd_card((*profile).bricks_hit, (*profile).id);
+		write_paddle_hits_to_sd_card((*profile).paddle_hits, (*profile).id);
+		write_buffs_caught_to_sd_card((*profile).buffs_caught, (*profile).id);
+		write_current_level_to_sd_card((*profile).current_level, (*profile).id);
+
 		write_name_to_sd_card((*profile).name, (*profile).id);
 	}
 
@@ -562,6 +954,13 @@ void updateProfile(Profile* profile)
 void updateUI()
 {
 	// printf("Updating UI \n");
-	drawText("        ", 15, 1, 0);
-	drawText((*current_profile).name,15,1,0);
+	 drawText("        ", 15, 1, 0);
+	 drawText((*current_profile).name,15,1,0);
+	// printf("Bricks Hit: %i \n", getBricksHit());
+	// drawInt(getBricksHit(), 19, 1, 0);
+	// drawInt(getPaddleHits(), 23, 1, 0);
+	// drawInt(getBuffsCaught(), 26, 1, 0);
+
+	return;
 }
+
