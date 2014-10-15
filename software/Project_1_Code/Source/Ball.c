@@ -107,6 +107,9 @@ void updatePosition(Ball *ball)
 							{
 								bounceWall(ball);
 								ball->x = (brick.x+brickWidth)*100+100;
+							} else if (brick.isIndestructable)
+							{
+								ball->y = (brick.y+brickHeight)*100+100;
 							}
 						}
 						hasBounced=1;
