@@ -709,6 +709,9 @@ void set_current_profile(Profile* profile)
 			readLevel(brickmap->brickArray, current_profile->id);
 			level = current_profile->current_level;
 
+		}else
+		{
+			level = 1;
 		}
 	}
 
