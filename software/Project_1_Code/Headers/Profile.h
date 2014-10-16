@@ -50,8 +50,11 @@ extern void incrementPaddleHits(int value);
 extern void incrementCurrentLevel(int value);
 extern void incrementBuffsCaught(int value);
 
-extern void readMap(int map_array[][bricksPerRow], int profile_number, int map_number );
-extern void writeMap(int map_array[][bricksPerRow], int profile_number, int map_number );
+extern void writeLevel(int map_array[][bricksPerRow], int profile_number);
+extern void readLevel(int map_array[][bricksPerRow], int profile_number);
+
+void readMap(int map_array[][bricksPerRow], int profile_number, int map_number );
+void writeMap(int map_array[][bricksPerRow], int profile_number, int map_number );
 
 extern void updateUI(); // Updates UI with the current profile's information
 

@@ -956,11 +956,26 @@ void updateUI()
 	// printf("Updating UI \n");
 	 drawText("        ", 15, 1, 0);
 	 drawText((*current_profile).name,15,1,0);
-	// printf("Bricks Hit: %i \n", getBricksHit());
+	 // int bricks_hit = getBricksHit();
+    //  int paddles = getPaddleHits();
+   //   int buffs = getBuffsCaught();
+	//  printf("Bricks Hit: %i \n", bricks_hit);
+	//  printf("Paddle Hits: %i \n", paddles);
+	//  printf("Buffs Caught: %i \n", buffs);
 	// drawInt(getBricksHit(), 19, 1, 0);
 	// drawInt(getPaddleHits(), 23, 1, 0);
 	// drawInt(getBuffsCaught(), 26, 1, 0);
 
 	return;
+}
+
+void writeLevel(int map_array[][bricksPerRow], int profile_number)
+{
+	writeMap(map_array, profile_number, 1);
+}
+
+void readLevel(int map_array[][bricksPerRow], int profile_number)
+{
+	readMap(map_array, profile_number, 1);
 }
 

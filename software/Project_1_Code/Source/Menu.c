@@ -261,6 +261,12 @@ void menuIndexLookUp(int index)
 				printf("Please insert an SD Card \n");
 				return;
 			}
+
+			if(current_profile->id == 9) // So that we don't attempt to save the anonymous profile
+			{
+				printf("You can't save the anon profile! \n");
+				return;
+			}
 			// Saving the data of the current profile
 			updateProfile(current_profile);
 
@@ -293,7 +299,7 @@ void getMenu(Menu *menu, int index, int pushToStack)
 		sprintf(menu->option[0],"    Main Menu");
 		sprintf(menu->option[1],"     Resume");
 		sprintf(menu->option[2],"     Profiles");
-		sprintf(menu->option[3],"     Settings");
+		sprintf(menu->option[3],"     Statistics");
 		sprintf(menu->option[4],"     Save Game");
 		menu->min=1;
 		menu->max=4;
@@ -312,17 +318,23 @@ void getMenu(Menu *menu, int index, int pushToStack)
 		menu->optionIndex[1] = 1;  //resume
 	}else if(index == settingsMenu)
 	{
-		sprintf(menu->option[0],"  Settings Menu");
-		sprintf(menu->option[1],"     Volume");
-		sprintf(menu->option[2],"   Game Speed");
-		sprintf(menu->option[3],"     Scores");
-		// sprintf(menu->option[4],"    Test Save");
+		 // sprintf(menu->option[0],"  Settings Menu");
+		  // sprintf(menu->option[1],"     Volume");
+		 // sprintf(menu->option[2],"   Game Speed");
+		 // sprintf(menu->option[3],"     Scores");
+		//  sprintf(menu->option[4],"    Test Save");
+
+		 sprintf(menu->option[0],"  Total Bricks Hit:   %i", (*current_profile).bricks_hit);
+		 sprintf(menu->option[1],"  Total Paddle Hits:  %i", (*current_profile).paddle_hits);
+		 sprintf(menu->option[2],"  Total Buffs Caught: %i", (*current_profile).buffs_caught);
+		 sprintf(menu->option[3],"  Total Score:        %i", (*current_profile).score);
+
 		menu->min=1;
 		menu->max=4;
 		menu->selected=1;
-		menu->optionIndex[1] = 0;
-		menu->optionIndex[2] = 0;
-		menu->optionIndex[3] = 4;
+		// menu->optionIndex[1] = 0;
+		// menu->optionIndex[2] = 0;
+		// menu->optionIndex[3] = 4;
 		// menu->optionIndex[4] = 5;
 	}
 	else if(index == scoreMenu)
