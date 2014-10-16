@@ -387,9 +387,10 @@ void getMenu(Menu *menu, int index, int pushToStack)
 		// Load the names from the available profiles (loading scores for now)
 
 		sprintf(menu->option[0], "    Profiles");
-		sprintf(menu->option[1], "    %s    Score: %i", (*profile_1).name, (*profile_1).score);
-		sprintf(menu->option[2], "    %s    Score: %i", (*profile_2).name, (*profile_2).score);
-		sprintf(menu->option[3], "    %s    Score: %i", (*profile_3).name, (*profile_3).score);
+
+		sprintf(menu->option[1], "    %s  Score: %i Lvl: %i", (*profile_1).name, (*profile_1).score, ((*profile_1).current_level == 0)? 1 : (*profile_1).current_level);
+		sprintf(menu->option[2], "    %s  Score: %i Lvl: %i", (*profile_2).name, (*profile_2).score, ((*profile_2).current_level == 0)? 1 : (*profile_2).current_level);
+		sprintf(menu->option[3], "    %s  Score: %i Lvl: %i", (*profile_3).name, (*profile_3).score, ((*profile_3).current_level == 0)? 1 : (*profile_3).current_level);
 
 		menu->min=1;
 		menu->max=4;
@@ -405,13 +406,14 @@ void getMenu(Menu *menu, int index, int pushToStack)
 		sprintf(menu->option[0], "    %s", (*profile_1).name);
 		sprintf(menu->option[1], "    Load Profile");
 		sprintf(menu->option[2], "    Delete Profile");
-		sprintf(menu->option[3], "    Maps");
+		sprintf(menu->option[3], "    Resume Game ");
 
 		menu->min=1;
 		menu->max=4;
 		menu->selected=1;
 		menu->optionIndex[1] = 9;
 		menu->optionIndex[2] = 10;
+		menu->optionIndex[3] = 1;
 
 	}else if(index == editprofile2Menu)
 	{
@@ -420,13 +422,14 @@ void getMenu(Menu *menu, int index, int pushToStack)
 		sprintf(menu->option[0], "    %s", (*profile_2).name);
 		sprintf(menu->option[1], "    Load Profile");
 		sprintf(menu->option[2], "    Delete Profile");
-		sprintf(menu->option[3], "    Maps");
+		sprintf(menu->option[3], "    Resume Game");
 
 		menu->min=1;
 		menu->max=4;
 		menu->selected=1;
 		menu->optionIndex[1] = 11;
 		menu->optionIndex[2] = 12;
+		menu->optionIndex[3] = 1;
 
 	}else if(index == editprofile3Menu)
 	{
@@ -435,13 +438,14 @@ void getMenu(Menu *menu, int index, int pushToStack)
 		sprintf(menu->option[0], "    %s", (*profile_3).name);
 		sprintf(menu->option[1], "    Load Profile");
 		sprintf(menu->option[2], "    Delete Profile");
-		sprintf(menu->option[3], "    Maps");
+		sprintf(menu->option[3], "    Resume Game");
 
 		menu->min=1;
 		menu->max=4;
 		menu->selected=1;
 		menu->optionIndex[1] = 13;
 		menu->optionIndex[2] = 14;
+		menu->optionIndex[3] = 1;
 
 	}
 	else
