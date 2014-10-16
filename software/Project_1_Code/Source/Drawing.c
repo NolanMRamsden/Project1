@@ -21,7 +21,7 @@ void initVGA()
 	unsigned int pixel_buffer_addr1 = PIXEL_BUFFER_BASE;
 	unsigned int pixel_buffer_addr2 = PIXEL_BUFFER_BASE + (512 * 240 * 2);
 
-	// Set the background buffer address – Although we don’t use the
+	// Set the background buffer address ?Although we don’t use the
 	//background,
 	// they only provide a function to change the background
 	// buffer address, so
@@ -383,24 +383,63 @@ void coverBuff(int x, int y, int type)
 		colour=background;
 	}else if (type == widthMinusBuff)
 	{
-		colour = Red;
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y,x+4, y, Red, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+1,x+5, y+1, Red, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+2,x+6, y+2, Red,1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+3,x+6, y+3, Red, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+4,x+6, y+4, Red, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+5,x+5, y+5, Red, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+6,x+4, y+6, Red, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+3,x+4, y+3, White, 1);
+
+
+		
 	}else if (type == widthPlusBuff)
 	{
-		colour = Green;
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y,x+4, y, Red, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+1,x+5, y+1, Red, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+2,x+6, y+2, Red,1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+3,x+6, y+3, Red, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+4,x+6, y+4, Red, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+5,x+5, y+5, Red, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+6,x+4, y+6, Red, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+3,x+4, y+3, White, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+3, y+2,x+3, y+4, White, 1);
+	
 	}else if (type == pointsBuff)
 	{
-		colour = Cyan;
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y,x+4, y, Red, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+1,x+5, y+1, Red, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+2,x+6, y+2, Red,1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+3,x+6, y+3, Red, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+4,x+6, y+4, Red, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+5,x+5, y+5, Red, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+6,x+4, y+6, Red, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+2,x+4, y+2, White, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+3,x+2, y+5, White, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+4,x+4, y+4, White, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+4, y+3,x+4, y+3, White, 1);
+
+
+
+
+		
 	}else if (type == gunBuff)
 	{
-		colour = Magenta;
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y,x+4, y, Red, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+1,x+5, y+1, Red, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+2,x+6, y+2, Red,1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+3,x+6, y+3, Red, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+4,x+6, y+4, Red, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+5,x+5, y+5, Red, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+6,x+4, y+6, Red, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+1,x+4, y+1, White, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+2,x+1, y+4, White, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+5, y+2,x+5, y+4, White, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+3, y+3,x+5, y+3, White, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+5, y+4,x+5, y+4, White, 1);
+
 	}
-	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y,x+4, y, colour, 1);
-	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+1,x+5, y+1, colour, 1);
-	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+2,x+6, y+2, colour,1);
-	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+3,x+6, y+3, colour, 1);
-	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+4,x+6, y+4, colour, 1);
-	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+5,x+5, y+5, colour, 1);
-	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+6,x+4, y+6, colour, 1);
 }
 
 void drawInt(int value, int x, int y)
