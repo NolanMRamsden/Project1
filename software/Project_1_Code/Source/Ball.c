@@ -52,8 +52,9 @@ void updatePosition(Ball *ball)
 	}else if (y >= bottomScreenBound-ballDiameter)
 	{
 		ball->y = bottomScreenBound*100-ballDiameter*100-100;
+		ball->yVelo = ballSpawnBaseY;
 		bounceRoof(ball);
-		updateScore(-1);
+		updateScore(bottomHitScore);
 	}//end screen bounds
 
 	//hit paddle
@@ -69,6 +70,8 @@ void updatePosition(Ball *ball)
 				//mapped the paddle to a pyramid, we can improve this logic later
 				ball->xVelo += ((ball->x+ballDiameter*50)-(currentLevel->paddle->x+currentLevel->paddle->width*50))/paddleBounceScale;
 				bounceRoof(ball);
+				ball->yVelo -= rand()%ballPaddleRandModAddition+ballPaddleBaseAddition;
+
 			}
 		}//end paddle logic
 
@@ -114,7 +117,7 @@ void updatePosition(Ball *ball)
 							}
 						}
 						hasBounced=1;
-						updateScore(3);
+						updateScore(brickHitScore);
 						if (brick.isExplosive)
 						{
 							hit(currentLevel->bricks[i-1][j-1]);
@@ -137,6 +140,11 @@ void updatePosition(Ball *ball)
 			}
 		}
 	}//end brick logic
+
+	if(ball->yVelo > maxBallVeloY)
+		ball->yVelo = maxBallVeloY;
+	if(ball->xVelo > maxBallVeloX)
+		ball->xVelo = maxBallVeloX;
 }
 
 void bounceWall(Ball *ball)

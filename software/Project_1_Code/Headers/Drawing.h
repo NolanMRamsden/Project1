@@ -29,6 +29,6 @@ extern void drawScore(int score);
 extern void drawInt(int value, int x, int y);
 extern void drawAmmo(int ammo);
 extern void drawBuff(Buff *buff);
-extern void coverBuff(int x, int y, int type);
+extern void coverBuff(int x, int y, int type, int erase);
 
 #endif /* DRAWING_H_ */

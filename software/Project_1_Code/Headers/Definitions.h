@@ -27,6 +27,10 @@
 #define screenOutline     0xFFFF
 #define topBanner         0xFFFF
 
+//point factors
+#define brickHitScore          3
+#define bottomHitScore         -20
+
 //game state constants
 #define Playing        0
 #define Paused         1
@@ -46,7 +50,7 @@
 #define menuBG         0x7BEF
 #define menuHighlight  0xC618
 
-//paddle shit
+//paddle stuff
 #define paddleMoveScale   100
 #define paddleHeight      220
 #define paddleStartWidth  60
@@ -59,6 +63,12 @@
 //ball stuff
 #define ballDiameter      7
 #define maxBalls          3
+#define maxBallVeloY      400
+#define ballSpawnBaseY    200
+#define maxBallVeloX      400
+#define ballSpawnBaseX    200
+#define ballPaddleBaseAddition     10
+#define ballPaddleRandModAddition  20
 
 //brick stuff
 #define bricksPerRow      15

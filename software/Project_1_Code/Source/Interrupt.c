@@ -58,7 +58,6 @@ alt_u32 interruptFunction(void* context)
 
 	moveHorizontal(currentLevel->paddle, getUserInput());
 	drawPaddle(currentLevel->paddle);
-	drawAmmo(currentLevel->paddle->gunAmmo);
 
 	return alt_ticks_per_second()/screenRefreshRate;
 }

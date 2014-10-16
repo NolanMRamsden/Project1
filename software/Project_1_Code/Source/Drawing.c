@@ -330,6 +330,7 @@ void drawMenu(Menu menu)
 	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, rightScreenBound-menuOffset-1, topScreenBound+menuOffset+1 ,rightScreenBound-menuOffset-1, topScreenBound+menuOffset+difference*(menu.max+1)/5-1 , menuHighlight, 0);
 
 	drawMenuText(menu);
+
 }
 
 void drawMenuText(Menu menu)
@@ -343,6 +344,9 @@ void drawMenuText(Menu menu)
 			selected=1;
 		drawText(menu.option[i],33,21+4*i,selected);
 	}
+	drawScore(getScore());
+	drawText("BRICK BREAKER",34,1,0);
+	updateUI();
 }
 
 void drawScore(int score)
@@ -355,18 +359,11 @@ void drawScore(int score)
 	str = NULL;
 }
 
-void drawAmmo(int ammo)
-{
-	char *str = malloc(sizeof(char));
-	sprintf(str,"Ammo: %d  ",ammo);
-	drawText(str,73,1,0);
-}
-
 void drawBuff(Buff *buff)
 {
-	coverBuff(buff->prev2X,buff->prev2Y,-1);
+	coverBuff(buff->prev2X,buff->prev2Y,buff->type,1);
 	if(buff->alive == 1)
-		coverBuff(buff->x/100,buff->y/100,buff->type);
+		coverBuff(buff->x/100,buff->y/100,buff->type,0);
 
 	buff->needsErase--;
 	buff->prev2X=buff->prevX;
@@ -375,70 +372,79 @@ void drawBuff(Buff *buff)
 	buff->prevY=buff->y/100;
 }
 
-void coverBuff(int x, int y, int type)
+void coverBuff(int x, int y, int type, int erase)
 {
-	int colour = background;
-	if(type == -1)
+	int colour1,colour2;
+	if (type == widthMinusBuff)
 	{
-		colour=background;
-	}else if (type == widthMinusBuff)
+		colour1=Red;
+		colour2=White;
+	}else if (type == widthPlusBuff)
 	{
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y,x+4, y, Red, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+1,x+5, y+1, Red, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+2,x+6, y+2, Red,1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+3,x+6, y+3, Red, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+4,x+6, y+4, Red, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+5,x+5, y+5, Red, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+6,x+4, y+6, Red, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+3,x+4, y+3, White, 1);
-
-
+		colour1=Green;
+		colour2=White;
+	}else if (type == pointsBuff)
+	{
+		colour1=Cyan;
+		colour2=White;
+	}
+	if(erase)
+	{
+		colour1 = background;
+		colour2 = background;
+	}
+	if (type == widthMinusBuff)
+	{
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y,x+4, y, colour1, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+1,x+5, y+1, colour1, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+2,x+6, y+2, colour1,1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+3,x+6, y+3, colour1, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+4,x+6, y+4, colour1, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+5,x+5, y+5, colour1, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+6,x+4, y+6, colour1, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+3,x+4, y+3, colour2, 1);
 		
 	}else if (type == widthPlusBuff)
 	{
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y,x+4, y, Red, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+1,x+5, y+1, Red, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+2,x+6, y+2, Red,1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+3,x+6, y+3, Red, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+4,x+6, y+4, Red, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+5,x+5, y+5, Red, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+6,x+4, y+6, Red, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+3,x+4, y+3, White, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+3, y+2,x+3, y+4, White, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y,x+4, y, colour1, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+1,x+5, y+1, colour1, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+2,x+6, y+2, colour1,1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+3,x+6, y+3, colour1, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+4,x+6, y+4, colour1, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+5,x+5, y+5, colour1, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+6,x+4, y+6, colour1, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+3,x+4, y+3, colour2, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+3, y+2,x+3, y+4, colour2, 1);
 	
 	}else if (type == pointsBuff)
 	{
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y,x+4, y, Red, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+1,x+5, y+1, Red, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+2,x+6, y+2, Red,1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+3,x+6, y+3, Red, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+4,x+6, y+4, Red, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+5,x+5, y+5, Red, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+6,x+4, y+6, Red, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+2,x+4, y+2, White, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+3,x+2, y+5, White, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+4,x+4, y+4, White, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+4, y+3,x+4, y+3, White, 1);
-
-
-
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y,x+4, y, colour1, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+1,x+5, y+1, colour1, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+2,x+6, y+2, colour1,1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+3,x+6, y+3, colour1, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+4,x+6, y+4, colour1, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+5,x+5, y+5, colour1, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+6,x+4, y+6, colour1, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+2,x+4, y+2, colour2, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+3,x+2, y+5, colour2, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+4,x+4, y+4, colour2, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+4, y+3,x+4, y+3, colour2, 1);
 
 		
 	}else if (type == gunBuff)
 	{
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y,x+4, y, Red, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+1,x+5, y+1, Red, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+2,x+6, y+2, Red,1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+3,x+6, y+3, Red, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+4,x+6, y+4, Red, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+5,x+5, y+5, Red, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+6,x+4, y+6, Red, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+1,x+4, y+1, White, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+2,x+1, y+4, White, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+5, y+2,x+5, y+4, White, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+3, y+3,x+5, y+3, White, 1);
-		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+5, y+4,x+5, y+4, White, 1);
-
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y,x+4, y, colour1, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+1,x+5, y+1, colour1, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+2,x+6, y+2, colour1,1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+3,x+6, y+3, colour1, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x, y+4,x+6, y+4, colour1, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+5,x+5, y+5, colour1, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+6,x+4, y+6, colour1, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+2, y+1,x+4, y+1, colour2, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+1, y+2,x+1, y+4, colour2, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+5, y+2,x+5, y+4, colour2, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+3, y+3,x+5, y+3, colour2, 1);
+		alt_up_pixel_buffer_dma_draw_line(pixel_buffer, x+5, y+4,x+5, y+4, colour2, 1);
 	}
 }
 

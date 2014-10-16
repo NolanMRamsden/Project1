@@ -746,6 +746,8 @@ int getBuffsCaught()
 void incrementScore(int value)
 {
 	(*current_profile).score += value;
+	if ((*current_profile).score < 0)
+		(*current_profile).score = 0;
 
 	return;
 }
@@ -993,7 +995,7 @@ void updateUI()
 	 drawText("        ", 15, 1, 0);
 	 drawText((*current_profile).name,15,1,0);
 	 drawInt(level,62,1);
-	 drawText("Level: ",55,1,0);
+	 drawText("Level: ",67,1,0);
 
 	return;
 }

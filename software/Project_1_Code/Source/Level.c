@@ -22,39 +22,9 @@ void initLevel(BrickMap brickMap)
 {
 	int i=0,j=0;
 
-	// Free up any memory that may have been used
-	if(first_init != 0)
-	{
-		free(currentLevel->buff);
-		currentLevel->buff = NULL;
-		free(currentLevel->paddle);
-		currentLevel->paddle = NULL;
-
-		for(i = 0; i < maxBalls; i++)
-		{
-			free(currentLevel->ball[i]);
-			currentLevel->ball[i] = NULL;
-		}
-		for(i=0;i<maxRows;i++)
-			for(j=0;j<bricksPerRow;j++)
-			{
-				free(currentLevel->bricks[i][j]);
-				currentLevel->bricks[i][j] = NULL;
-			}
-	}
-
-
-	currentLevel->buff=malloc(sizeof(Buff));
 	spawnBuff(currentLevel->buff,rightScreenBound + 3,bottomScreenBound + 3, 0);
 	currentLevel->buff->alive=0;
-
-	for(i=0;i<maxBalls;i++)
-	{
-		currentLevel->ball[i] = malloc(sizeof(Ball));
-	}
-	currentLevel->paddle = malloc(sizeof(Paddle));
 	initAllBricks(currentLevel,brickMap.brickArray);
-
 	int rowHit=0;
 	for(i=maxRows-1;i>=0;i--)
 	{
@@ -67,9 +37,14 @@ void initLevel(BrickMap brickMap)
 	}
 
 	initPaddle(currentLevel->paddle,30);
-	startBall(currentLevel->ball[0],40,topScreenBound+(brickHeight+brickSpacing)*rowHit+brickHeight*1.2,200,200);
-	startBall(currentLevel->ball[1],60,topScreenBound+(brickHeight+brickSpacing)*rowHit+brickHeight*1.2,200,200);
-	startBall(currentLevel->ball[2],80,topScreenBound+(brickHeight+brickSpacing)*rowHit+brickHeight*1.2,200,200);
+	startBall(currentLevel->ball[0],40,topScreenBound+(brickHeight+brickSpacing)*rowHit+brickHeight*1.2,ballSpawnBaseX+rand()%20,ballSpawnBaseY+rand()%20);
+	startBall(currentLevel->ball[1],60,topScreenBound+(brickHeight+brickSpacing)*rowHit+brickHeight*1.2,ballSpawnBaseX+rand()%20,ballSpawnBaseY+rand()%20);
+	startBall(currentLevel->ball[2],80,topScreenBound+(brickHeight+brickSpacing)*rowHit+brickHeight*1.2,ballSpawnBaseX+rand()%20,ballSpawnBaseY+rand()%20);
+
+	if(level < 6)
+		nullBall(currentLevel->ball[2]);
+	if(level < 3)
+		nullBall(currentLevel->ball[1]);
 
 	// score = 0;
 	currentLevel->brickCount=0;
@@ -81,8 +56,6 @@ void initLevel(BrickMap brickMap)
 			else if(brickMap.brickArray[i][j]!=5)
 				currentLevel->brickCount += brickMap.brickArray[i][j];
 	}
-
-	first_init = 1;
 }
 
 /*
@@ -113,8 +86,6 @@ void drawStart(Level *level)
 	drawScore(getScore());
 	drawText("BRICK BREAKER",34,1,0);
 	updateUI();
-	drawAmmo(level->paddle->gunAmmo);
-
 }
 
 void initAllBricks(Level *level, int initArray[][bricksPerRow])
@@ -123,7 +94,6 @@ void initAllBricks(Level *level, int initArray[][bricksPerRow])
 	for(i=0;i<maxRows;i++)
 		for(j=0;j<bricksPerRow;j++)
 		{
-			level->bricks[i][j]=malloc(sizeof(Brick));
 			initBrick(level->bricks[i][j], brickLeftStart+j*(brickWidth+brickSpacing), topScreenBound+brickSpacing+(brickHeight+brickSpacing)*(i), initArray[i][j]);
 		}
 }
@@ -176,8 +146,8 @@ void levelLookUp(BrickMap *brickMap, int level)
 		int brickArray[maxRows][bricksPerRow] =
 		{
 			{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-			{0,6,6,6,6,6,0,0,6,6,6,6,6,6,0},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,6,0,0,6,0,0,0,0,6,0,0,0,6,0},
+			{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -194,10 +164,10 @@ void levelLookUp(BrickMap *brickMap, int level)
 			{1,1,3,1,3,1,3,1,3,1,3,1,3,1,1},
 			{1,2,1,2,1,2,1,2,1,2,1,2,1,2,1},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,5,0,0,0,0,0,0,0,5,0,0,0},
+			{0,0,5,0,0,0,0,0,0,0,0,0,5,0,0},
+			{0,5,0,0,0,0,0,0,0,0,0,0,0,5,0},
+			{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
@@ -209,13 +179,13 @@ void levelLookUp(BrickMap *brickMap, int level)
 		{
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			{0,0,1,1,1,1,1,0,1,1,1,1,1,0,0},
-			{0,0,1,1,1,1,1,0,1,1,1,1,1,0,0},
+			{0,0,1,1,1,1,6,0,6,1,1,1,1,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,1,1,1,1,1,0,1,1,1,1,1,0,0},
-			{0,0,1,1,1,1,1,0,1,1,1,1,1,0,0},
+			{0,0,3,1,3,1,3,0,1,3,1,3,1,0,0},
+			{0,0,1,3,1,3,1,0,3,1,3,1,3,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,1,1,1,1,1,0,1,1,1,1,1,0,0},
-			{0,0,1,1,1,1,1,0,1,1,1,1,1,0,0},
+			{0,0,2,1,2,1,2,0,1,2,1,2,1,0,0},
+			{0,0,1,2,1,2,1,0,2,1,2,1,2,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
 		};
 		loadInto(brickMap,brickArray);
@@ -226,10 +196,10 @@ void levelLookUp(BrickMap *brickMap, int level)
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			{0,3,3,3,3,3,3,3,3,3,3,3,3,3,0},
 			{0,3,2,2,2,2,2,2,2,2,2,2,2,3,0},
-			{0,3,2,1,1,1,1,1,1,1,1,1,2,3,0},
-			{0,3,2,1,0,0,0,0,0,0,0,1,2,3,0},
-			{0,3,2,1,0,0,0,0,0,0,0,1,2,3,0},
-			{0,3,2,1,1,1,1,1,1,1,1,1,2,3,0},
+			{0,0,2,1,1,1,1,1,1,1,1,1,2,0,0},
+			{0,0,2,1,0,0,0,0,0,0,0,1,2,0,0},
+			{0,0,2,1,0,0,0,0,0,0,0,1,2,0,0},
+			{0,0,2,1,1,1,1,1,1,1,1,1,2,0,0},
 			{0,3,2,2,2,2,2,2,2,2,2,2,2,3,0},
 			{0,3,3,3,3,3,3,3,3,3,3,3,3,3,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
@@ -239,16 +209,16 @@ void levelLookUp(BrickMap *brickMap, int level)
 	{
 		int brickArray[maxRows][bricksPerRow] =
 		{
+			{0,0,0,0,0,2,0,1,0,2,0,0,0,0,0},
 			{0,3,0,3,0,2,0,1,0,2,0,3,0,3,0},
+			{0,3,0,0,0,2,0,1,0,2,0,0,0,3,0},
+			{0,0,0,3,0,2,0,0,0,2,0,3,0,0,0},
+			{0,3,0,3,0,0,0,0,0,0,0,3,0,3,0},
+			{0,3,0,3,0,0,0,0,0,0,0,3,0,3,0},
+			{0,0,0,3,0,2,0,0,0,2,0,3,0,0,0},
+			{0,3,0,0,0,2,0,1,0,2,0,0,0,3,0},
 			{0,3,0,3,0,2,0,1,0,2,0,3,0,3,0},
-			{0,3,0,3,0,2,0,1,0,2,0,3,0,3,0},
-			{0,3,0,3,0,2,0,1,0,2,0,3,0,3,0},
-			{0,3,0,3,0,2,0,1,0,2,0,3,0,3,0},
-			{0,3,0,3,0,2,0,1,0,2,0,3,0,3,0},
-			{0,3,0,3,0,2,0,1,0,2,0,3,0,3,0},
-			{0,3,0,3,0,2,0,1,0,2,0,3,0,3,0},
-			{0,3,0,3,0,2,0,1,0,2,0,3,0,3,0},
-			{0,3,0,3,0,2,0,1,0,2,0,3,0,3,0}
+			{0,0,0,0,0,2,0,1,0,2,0,0,0,0,0}
 		};
 		loadInto(brickMap,brickArray);
 	}else if(level == 6)
@@ -265,6 +235,22 @@ void levelLookUp(BrickMap *brickMap, int level)
 			{0,0,3,3,3,3,3,0,3,3,3,3,3,0,0},
 			{0,0,5,5,5,5,5,0,5,5,5,5,5,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
+		};
+		loadInto(brickMap,brickArray);
+	}else if(level == 7)
+	{
+		int brickArray[maxRows][bricksPerRow] =
+		{
+			{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+			{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+			{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+			{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+			{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+			{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+			{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+			{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+			{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+			{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 		};
 		loadInto(brickMap,brickArray);
 	}

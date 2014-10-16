@@ -6,35 +6,32 @@ static int currentState;
 static int prevState;
 BrickMap *brickmap = NULL;
 int level = 1;
-int first_init;
 
 void changeState(int state)
 {
 	prevState = currentState;
 	currentState = state;
-
 }
 
 int main()
 {
 	sdcard_Init();
-
+	initVGA();
 	initAnonProfile();
 	brickmap = malloc(sizeof(BrickMap));
-	// score = get_score_from_sd_card(1);
- 	//initProfiles();
+	currentLevel->buff=malloc(sizeof(Buff));
+	currentLevel->paddle = malloc(sizeof(Paddle));
+	int i,j;
+	for(i=0;i<maxBalls;i++)
+		currentLevel->ball[i] = malloc(sizeof(Ball));
 
-	// Writes the map to profile 1 map 1
-	//writeMap(brickArray, 1, 1);
+	for(i=0;i<maxRows;i++)
+		for(j=0;j<bricksPerRow;j++)
+			currentLevel->bricks[i][j]=malloc(sizeof(Brick));
 
-	// Reads the map from profile 1 map 1
-	//readMap(brickArray, 1, 1);
-
-	//printIntArray(brickArray);
 
 	level=1;
-	first_init = 0;
-	initVGA();
+
 
 	//pre load the root menu
 	getMenu(&currentMenu,rootMenu, 1);
