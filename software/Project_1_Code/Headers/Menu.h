@@ -4,11 +4,13 @@
  *  Created on: Sep 30, 2014
  *      Author: Karen
  */
-#include "headers.h"
-#include "Input.h"
+
 
 #ifndef MENU_H_
 #define MENU_H_
+
+#include "headers.h"
+#include "Input.h"
 
 typedef struct Menu
 {

@@ -1,8 +1,12 @@
 
 #include "Headers/headers.h"
+#include "Headers/Level.h"
 
 static int currentState;
 static int prevState;
+BrickMap *brickmap = NULL;
+int level;
+int first_init;
 
 void changeState(int state)
 {
@@ -16,7 +20,7 @@ int main()
 	sdcard_Init();
 
 	initAnonProfile();
-	BrickMap *brickmap = malloc(sizeof(BrickMap));
+	brickmap = malloc(sizeof(BrickMap));
 	// score = get_score_from_sd_card(1);
  	//initProfiles();
 
@@ -28,7 +32,8 @@ int main()
 
 	//printIntArray(brickArray);
 
-	int level=6;
+	level=1;
+	first_init = 0;
 	initVGA();
 
 	//pre load the root menu
@@ -89,18 +94,21 @@ int main()
 			prevState = currentState;
 		}
 		//state machine
-		if(currentState != Playing)
+		if(currentState == MenuShow)
 		{
 			menuLoop();
 		}else //while were playing we will have to check for other things (all balls gone etc.)
 		{
-			if(currentLevel->brickCount==0)
+			if(currentLevel->brickCount<=0)
 			{
+				printf("starting new level \n");
 				stopInterrupt();
 				level++;
 				levelLookUp(brickmap,level);
 				initLevel(*brickmap);
-				prevState= -1;
+				prevState= currentState - 1;
+				currentState = Playing;
+				printf("finished starting new level \n");
 			}
 		}
 	}

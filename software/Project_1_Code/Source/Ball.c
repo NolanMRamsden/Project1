@@ -5,8 +5,7 @@
  *      Author: Nolan
  */
 #include "../Headers/headers.h"
-
-
+#include "../Headers/Level.h"
 void startBall(Ball *ball, int x, int y, int xVelo, int yVelo)
 {
 	ball->x = x*100;
@@ -109,6 +108,9 @@ void updatePosition(Ball *ball)
 							{
 								bounceWall(ball);
 								ball->x = (brick.x+brickWidth)*100+100;
+							} else if (brick.isIndestructable)
+							{
+								ball->y = (brick.y+brickHeight)*100+100;
 							}
 						}
 						hasBounced=1;

@@ -6,10 +6,10 @@
  */
 #include "headers.h"
 
-
 #ifndef LEVEL_H_
 #define LEVEL_H_
-
+// #include "Buff.h"
+#include "Definitions.h"
 /*
  * contains all the information to be accessible,
  * the paddle ball and bricks are essentially all
@@ -32,7 +32,10 @@ typedef struct BrickMap
 	int brickArray[maxRows][bricksPerRow];
 } BrickMap;
 
-Level *currentLevel;
+extern Level *currentLevel;
+extern BrickMap *brickmap;
+extern int level;
+extern int first_init;
 Menu currentMenu;
 
 extern void initLevel(BrickMap brickMap);
@@ -41,4 +44,5 @@ extern void drawStart(Level *level);
 extern void updateScore(int value);
 extern void levelLookUp(BrickMap *brickmap, int level);
 extern void loadInto(BrickMap *brickmap, int map[][bricksPerRow]);
+
 #endif /* LEVEL_H_ */

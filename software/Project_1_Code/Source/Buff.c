@@ -5,6 +5,7 @@
  *      Author: Nolan
  */
 #include "../Headers/Buff.h"
+#include "../Headers/Level.h"
 
 void spawnBuff(Buff *buff, int x, int y, int type)
 {

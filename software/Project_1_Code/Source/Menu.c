@@ -6,6 +6,8 @@
  */
 #include "../Headers/Menu.h"
 #include "../Headers/Profile.h"
+#include "../Headers/Level.h"
+
 #include <string.h>
 
 /*
@@ -171,6 +173,11 @@ void menuIndexLookUp(int index)
 			set_current_profile(profile_1);
 			printf("Current profile: %s", (*current_profile).name);
 			// Reload the game
+
+			if(current_profile->current_level == 0){
+				levelLookUp(brickmap,1);
+			}
+			initLevel(*brickmap);
 			changeState(Playing);
 			return;
 
@@ -187,6 +194,8 @@ void menuIndexLookUp(int index)
 			delete_profile(1);
 			// reloadProfiles();
 
+			levelLookUp(brickmap,1);
+			initLevel(*brickmap);
 			getMenu(&currentMenu, loadprofileMenu, 1);
 			drawMenuText(currentMenu);
 			return;
@@ -202,6 +211,10 @@ void menuIndexLookUp(int index)
 			set_current_profile(profile_2);
 			printf("Current profile: %s", (*current_profile).name);
 			// Reload the game
+			if(current_profile->current_level == 0){
+				levelLookUp(brickmap,1);
+			}
+			initLevel(*brickmap);
 			changeState(Playing);
 			return;
 			break;
@@ -216,7 +229,8 @@ void menuIndexLookUp(int index)
 			// Delete the profile, reload all the profiles, and then reload the profile selection menu
 			delete_profile(2);
 			// reloadProfiles();
-
+			levelLookUp(brickmap,1);
+			initLevel(*brickmap);
 			getMenu(&currentMenu, loadprofileMenu, 1);
 			drawMenuText(currentMenu);
 			return;
@@ -233,6 +247,12 @@ void menuIndexLookUp(int index)
 			set_current_profile(profile_3);
 			printf("Current profile: %s \n", (*current_profile).name);
 			// Reload the game
+
+			if(current_profile->current_level == 0){
+				levelLookUp(brickmap,1);
+			}
+			initLevel(*brickmap);
+
 			changeState(Playing);
 			return;
 			break;
@@ -247,7 +267,8 @@ void menuIndexLookUp(int index)
 			// Delete the profile, reload all the profiles, and then reload the profile selection menu
 			delete_profile(3);
 			// reloadProfiles();
-
+			levelLookUp(brickmap,1);
+			initLevel(*brickmap);
 			getMenu(&currentMenu, loadprofileMenu, 1);
 			drawMenuText(currentMenu);
 			return;

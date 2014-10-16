@@ -14,6 +14,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../Headers/Profile.h"
+#include "../Headers/Level.h"
+
 
 Profile* profile_1 = NULL;
 Profile* profile_2 = NULL;
@@ -28,7 +30,7 @@ void initAnonProfile()
 	(*anon_profile).bricks_hit = 0;
 	(*anon_profile).paddle_hits = 0;
 	(*anon_profile).buffs_caught = 0;
-	(*anon_profile).current_level = 1;
+	(*anon_profile).current_level = 0;
 	(*anon_profile).name = "anonymous"; // This currently will never show up, put in just in case
 	(*anon_profile).id = 9;
 	current_profile = anon_profile;
@@ -634,42 +636,58 @@ void delete_profile(int profile_number)
 		case 1:
 			(*profile_1).name = "new_profile";
 			(*profile_1).score = 0;
+			profile_1->bricks_hit = 0;
+			profile_1->buffs_caught = 0;
+			profile_1->paddle_hits = 0;
+			profile_1->current_level = 0;
 			write_score_to_sd_card(0, 1);
 			write_bricks_hit_to_sd_card(0, 1);
 			write_paddle_hits_to_sd_card(0, 1);
 			write_buffs_caught_to_sd_card(0, 1);
-			write_current_level_to_sd_card(1, 1);
+			write_current_level_to_sd_card(0, 1);
 
 			write_name_to_sd_card("new_profile", 1);
 			break;
 		case 2:
 			(*profile_2).name = "new_profile";
 			(*profile_2).score = 0;
+			profile_2->bricks_hit = 0;
+			profile_2->buffs_caught = 0;
+			profile_2->paddle_hits = 0;
+			profile_2->current_level = 0;
 			write_score_to_sd_card(0,2);
 			write_bricks_hit_to_sd_card(0, 2);
 			write_paddle_hits_to_sd_card(0, 2);
 			write_buffs_caught_to_sd_card(0, 2);
-			write_current_level_to_sd_card(1, 2);
+			write_current_level_to_sd_card(0, 2);
 			write_name_to_sd_card("new_profile", 2);
 			break;
 		case 3:
 			(*profile_3).name = "new_profile";
 			(*profile_3).score = 0;
+			profile_3->bricks_hit = 0;
+			profile_3->buffs_caught = 0;
+			profile_3->paddle_hits = 0;
+			profile_3->current_level = 0;
 			write_score_to_sd_card(0,3);
 			write_bricks_hit_to_sd_card(0, 3);
 			write_paddle_hits_to_sd_card(0, 3);
 			write_buffs_caught_to_sd_card(0, 3);
-			write_current_level_to_sd_card(1, 3);
+			write_current_level_to_sd_card(0, 3);
 			write_name_to_sd_card("new_profile", 3);
 			break;
 		default:
 			(*profile_1).name = "new_profile";
 			(*profile_1).score = 0;
+			profile_1->bricks_hit = 0;
+			profile_1->buffs_caught = 0;
+			profile_1->paddle_hits = 0;
+			profile_1->current_level = 0;
 			write_score_to_sd_card(0,1);
 			write_bricks_hit_to_sd_card(0, 1);
 			write_paddle_hits_to_sd_card(0, 1);
 			write_buffs_caught_to_sd_card(0, 1);
-			write_current_level_to_sd_card(1, 1);
+			write_current_level_to_sd_card(0, 1);
 			write_name_to_sd_card("new_profile", 1);
 			break;
 
@@ -682,6 +700,17 @@ void delete_profile(int profile_number)
 void set_current_profile(Profile* profile)
 {
 	current_profile = profile;
+	if(current_profile->id != 9)
+	{
+		if(current_profile->current_level > 0)
+		{
+			// Read the level
+			printf("Reading map \n");
+			readLevel(brickmap->brickArray, current_profile->id);
+			level = current_profile->current_level;
+
+		}
+	}
 
 	return;
 }
@@ -943,7 +972,12 @@ void updateProfile(Profile* profile)
 		write_bricks_hit_to_sd_card((*profile).bricks_hit, (*profile).id);
 		write_paddle_hits_to_sd_card((*profile).paddle_hits, (*profile).id);
 		write_buffs_caught_to_sd_card((*profile).buffs_caught, (*profile).id);
-		write_current_level_to_sd_card((*profile).current_level, (*profile).id);
+
+		// Write the current level number, as well as the map for that level
+		writeBrickLevel(((*currentLevel).bricks), (*profile).id);
+		write_current_level_to_sd_card(level, (*profile).id);
+		profile->current_level = level;
+
 
 		write_name_to_sd_card((*profile).name, (*profile).id);
 	}
@@ -974,8 +1008,27 @@ void writeLevel(int map_array[][bricksPerRow], int profile_number)
 	writeMap(map_array, profile_number, 1);
 }
 
+void writeBrickLevel(Brick* brick_array[][bricksPerRow], int profile_number)
+{
+	int map_array[maxRows][bricksPerRow] = {0};
+    int i, j = 0;
+	for (i = 0; i < maxRows; i++)
+	{
+		for(j = 0; j < bricksPerRow; j++)
+		{
+			map_array[i][j] = brick_array[i][j]->health;
+			// printf("health: %i \n", (brick_array[i][j].health));
+		}
+	}
+	printf("saving this level: \n");
+	// printIntArray(map_array);
+	writeMap(map_array, profile_number, 1);
+}
+
 void readLevel(int map_array[][bricksPerRow], int profile_number)
 {
 	readMap(map_array, profile_number, 1);
+	printf("Read Level from SD CARD \n");
+	// printIntArray(map_array);
 }
 

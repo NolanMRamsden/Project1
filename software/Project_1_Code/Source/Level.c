@@ -11,7 +11,7 @@
 
 #include <stdlib.h>
 
-
+Level * currentLevel;
 // int score;
 
 /*
@@ -20,10 +20,34 @@
  */
 void initLevel(BrickMap brickMap)
 {
-	currentLevel->buff=malloc(sizeof(Buff));
-	spawnBuff(currentLevel->buff,topScreenBound + 1,bottomScreenBound + 1, 0);
-	currentLevel->buff->alive=0;
 	int i=0,j=0;
+
+	// Free up any memory that may have been used
+	if(first_init != 0)
+	{
+		free(currentLevel->buff);
+		currentLevel->buff = NULL;
+		free(currentLevel->paddle);
+		currentLevel->paddle = NULL;
+
+		for(i = 0; i < maxBalls; i++)
+		{
+			free(currentLevel->ball[i]);
+			currentLevel->ball[i] = NULL;
+		}
+		for(i=0;i<maxRows;i++)
+			for(j=0;j<bricksPerRow;j++)
+			{
+				free(currentLevel->bricks[i][j]);
+				currentLevel->bricks[i][j] = NULL;
+			}
+	}
+
+
+	currentLevel->buff=malloc(sizeof(Buff));
+	spawnBuff(currentLevel->buff,rightScreenBound + 3,bottomScreenBound + 3, 0);
+	currentLevel->buff->alive=0;
+
 	for(i=0;i<maxBalls;i++)
 	{
 		currentLevel->ball[i] = malloc(sizeof(Ball));
@@ -57,6 +81,8 @@ void initLevel(BrickMap brickMap)
 			else if(brickMap.brickArray[i][j]!=5)
 				currentLevel->brickCount += brickMap.brickArray[i][j];
 	}
+
+	first_init = 1;
 }
 
 /*

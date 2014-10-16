@@ -5,7 +5,7 @@
  *      Author: Nolan
  */
 #include "../Headers/Brick.h"
-
+#include "../Headers/Level.h"
 
 
 void initBrick(Brick *brick, int x, int y, int health)
@@ -29,13 +29,16 @@ void initBrick(Brick *brick, int x, int y, int health)
  */
 void hit(Brick *brick)
 {
-	if(brick->isIndestructable == 1 ||
-		brick->health == 0)
+	if(brick->isIndestructable == 1)
 	{
+		brick->needUpdate=1;
 		return;
 	}
 	// Increment the Bricks Hit
 	incrementBricksHit(1);
+
+	if(brick->health == 0)
+		return;
 	if (brick->isExplosive ==1)
 	{
 		brick->health =0;

@@ -4,10 +4,10 @@
  *  Created on: Oct 7, 2014
  *      Author: Nolan
  */
-#include "headers.h"
-
 #ifndef BUFF_H_
 #define BUFF_H_
+
+#include "headers.h"
 
 typedef struct Buff
 {

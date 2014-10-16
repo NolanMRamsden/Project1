@@ -7,6 +7,8 @@
 
 #include "../Headers/Buff.h"
 #include "../Headers/Interrupt.h"
+#include "../Headers/Level.h"
+
 static alt_alarm alarm;
 int countDown;
 
@@ -29,10 +31,10 @@ alt_u32 interruptFunction(void* context)
 	{
 		for(i=0;i<bricksPerRow;i++)
 		{
-			if (currentLevel->bricks[j][i]->needUpdate == 1) {
+			if (currentLevel->bricks[j][i]->needUpdate > 0) {
 				currentLevel->bricks[j][i]->prevHealth = -1;
 				drawBrick(currentLevel->bricks[j][i]);
-				currentLevel->bricks[j][i]->needUpdate = 0;
+				currentLevel->bricks[j][i]->needUpdate--;
 
 			}
 		}

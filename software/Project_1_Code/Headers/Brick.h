@@ -4,11 +4,11 @@
  *  Created on: Sep 24, 2014
  *      Author: Nolan
  */
-#include "Buff.h"
-#include "headers.h"
-
 #ifndef BRICK_H_
 #define BRICK_H_
+
+#include "Buff.h"
+#include "headers.h"
 
 /*
  * bricks the balls will be hitting
