@@ -5,7 +5,7 @@
 static int currentState;
 static int prevState;
 BrickMap *brickmap = NULL;
-int level;
+int level = 1;
 int first_init;
 
 void changeState(int state)

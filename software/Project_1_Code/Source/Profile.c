@@ -989,7 +989,7 @@ void updateUI()
 {
 	 drawText("        ", 15, 1, 0);
 	 drawText((*current_profile).name,15,1,0);
-	 drawInt(((current_profile->current_level == 0)? 1 : (current_profile->current_level)),62,1);
+	 drawInt(level,62,1);
 	 drawText("Level: ",55,1,0);
 
 	return;
