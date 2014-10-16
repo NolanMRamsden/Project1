@@ -987,18 +987,10 @@ void updateProfile(Profile* profile)
 
 void updateUI()
 {
-	// printf("Updating UI \n");
 	 drawText("        ", 15, 1, 0);
 	 drawText((*current_profile).name,15,1,0);
-	 // int bricks_hit = getBricksHit();
-    //  int paddles = getPaddleHits();
-   //   int buffs = getBuffsCaught();
-	//  printf("Bricks Hit: %i \n", bricks_hit);
-	//  printf("Paddle Hits: %i \n", paddles);
-	//  printf("Buffs Caught: %i \n", buffs);
-	// drawInt(getBricksHit(), 19, 1, 0);
-	// drawInt(getPaddleHits(), 23, 1, 0);
-	// drawInt(getBuffsCaught(), 26, 1, 0);
+	 drawInt(((current_profile->current_level == 0)? 1 : (current_profile->current_level)),62,1);
+	 drawText("Level: ",55,1,0);
 
 	return;
 }

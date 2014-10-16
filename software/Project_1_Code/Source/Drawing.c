@@ -406,8 +406,8 @@ void coverBuff(int x, int y, int type)
 void drawInt(int value, int x, int y)
 {
 	char *str = malloc(sizeof(char));
-	sprintf(str,"%d  ",value);
-	drawText(str,1,1,0);
+	sprintf(str,"%i",value);
+	drawText(str,x,y,0);
 
 	free(str);
 	str = NULL;
