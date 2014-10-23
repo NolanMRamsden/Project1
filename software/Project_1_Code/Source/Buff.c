@@ -47,7 +47,7 @@ void moveBuff(Buff *buff)
 		&& buff->x <= currentLevel->paddle->x + currentLevel->paddle->width*100 + 100)
 		{
 			incrementBuffsCaught(1);
-			switch (buff->type)
+			switch (buff->type)  //appropriate reaction based on type of buff
 			{
 				case pointsBuff:
 					updateScore(100);

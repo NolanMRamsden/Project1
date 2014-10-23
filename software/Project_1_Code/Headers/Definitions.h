@@ -55,7 +55,7 @@
 #define paddleHeight      220
 #define paddleStartWidth  60
 #define paddleThickness   5
-#define paddleBounceScale 70
+#define paddleBounceScale 30
 #define paddleMaxWidth    100
 #define paddleMinWidth    20
 #define maxAmmo           10
@@ -65,7 +65,7 @@
 #define maxBalls          3
 #define maxBallVeloY      400
 #define ballSpawnBaseY    200
-#define maxBallVeloX      400
+#define maxBallVeloX      300
 #define ballSpawnBaseX    200
 #define ballPaddleBaseAddition     10
 #define ballPaddleRandModAddition  20

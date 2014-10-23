@@ -117,7 +117,8 @@ void updatePosition(Ball *ball)
 							}
 						}
 						hasBounced=1;
-						updateScore(brickHitScore);
+						if(!brick.isIndestructable)
+							updateScore(brickHitScore);
 						if (brick.isExplosive)
 						{
 							hit(currentLevel->bricks[i-1][j-1]);

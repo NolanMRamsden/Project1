@@ -22,7 +22,7 @@ alt_u32 interruptFunction(void* context)
 	int i=0;
 	int j=0;
 
-	if(currentLevel->buff->alive == 1)
+	if(currentLevel->buff->alive == 1) //move the buff first so we can redraw nessacary bricks
 	{
 		moveBuff(currentLevel->buff);
 	}

@@ -49,7 +49,7 @@ void hit(Brick *brick)
 	brick->needUpdate = 1;
 	if(brick->health < 0)
 		brick->health=0;
-	if(brick->health == 0)
+	if(brick->health == 0) //spawn a buff if the brick is dead and rando hits
 		if(currentLevel->buff->alive == 0)
 			if(rand() % 100 < buffFrequency)
 				spawnBuff(currentLevel->buff, brick->x+brickWidth/2,brick->y+brickHeight,rand()%numBuffs+1);

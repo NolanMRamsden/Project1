@@ -19,8 +19,8 @@ int main()
 	initVGA();
 	initAnonProfile();
 	brickmap = malloc(sizeof(BrickMap));
-	currentLevel->buff=malloc(sizeof(Buff));
 	currentLevel->paddle = malloc(sizeof(Paddle));
+	currentLevel->buff=malloc(sizeof(Buff));
 	int i,j;
 	for(i=0;i<maxBalls;i++)
 		currentLevel->ball[i] = malloc(sizeof(Ball));
@@ -58,7 +58,7 @@ int main()
 	{
 		//input to state machine
 		counter++;
-		if(counter>65000)
+		if(counter>22000)
 		{
 			counter=0;
 			if(getMenuPB())
@@ -82,6 +82,7 @@ int main()
 			}else
 			{
 				stopInterrupt();
+				getMenu(&currentMenu,rootMenu, 1);
 				clearScreen();
 				drawStart(currentLevel);   //this is optional here
 				swapBuffers();

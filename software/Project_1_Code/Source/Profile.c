@@ -995,7 +995,7 @@ void updateUI()
 	 drawText("        ", 15, 1, 0);
 	 drawText((*current_profile).name,15,1,0);
 	 drawInt(level,74,1);
-	 drawText("Level: ",65,1,0);
+	 drawText("Level: ",66,1,0);
 
 	return;
 }
